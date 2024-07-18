@@ -1,0 +1,7 @@
+<div [class]="class">
+    <select [id]="id" [formControl]="control" (blur)="onBlur()" (focus)="onFocus()"
+        class="h-12 py-3 px-3 text-base w-full rounded-lg border bg-color-transparent" [class]="classSet">
+        <option value="" selected>{{ label }}</option>
+        <option *ngFor="let item of data" value="{{ item.value }}">{{ item.data }}</option>
+    </select>
+</div>

@@ -1,0 +1,94 @@
+<div class="flex flex-col justify-center w-full h-full items-center shadow-lg overflow-auto pt-4 gap-4">
+
+    <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+    <!-- Botones Busqueda -->
+    <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
+        <!-- Botones y buscador -->
+        <div class="flex flex-col md:flex-row gap-2 h-max border rounded-lg border-color-text p-2  md:divide-x">
+            <div class="flex flex-grow w-full">
+                <form [formGroup]="formBusqueda" class="flex flex-col md:flex-row gap-2 w-full">
+                    <app-custom-drop-down class="h-12 w-full md:w-max md:h-full" [id]="'id_pregunta'"
+                        [label]="'Búsqueda...'" [control]="formBusqueda.controls.busqueda" [class]="''"
+                        [data]="dataBusquedaProducto">
+                    </app-custom-drop-down>
+
+                    <app-custom-input-2 class="h-12 w-full md:h-full md:flex-grow" [id]="'id_busqueda_value'"
+                        [label]="'Búsqueda...'" [type]="'text'" [autocomplete]="''" [class]="''"
+                        [control]="formBusqueda.controls.value" [icon]="''">
+                    </app-custom-input-2>
+
+                    <app-custom-button-1 class="w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="'w-full'"
+                        [valid]="formBusqueda.valid" (click)="onClickBusqueda()">
+                    </app-custom-button-1>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full">
+        <!-- Table y Nav -->
+        <div class="overflow-auto shadow-md border rounded-lg grow">
+            <table
+                class="w-max md:w-full text-sm text-center rtl:text-right text-primary-500 table-fixed md:table-auto">
+                <thead class="text-sm text-primary-800 uppercase bg-primary-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Código Cotización
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">
+                            Fecha Solicitud
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">
+                            Fecha Emisión
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">
+                            Costo Total
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">
+                            Descuento
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">
+                            Total
+                        </th>
+
+                        <th scope="col" class="px-6 py-3">
+
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="text-primary-800 bg-white border-b hover:bg-primary-50"
+                        *ngFor="let item of dataUsuarios; index as i">
+                        <td class="px-2 py-2">{{ item.nombres }}</td>
+
+                        <td class="px-2 py-2">{{ item.nombres }}</td>
+
+                        <td class="px-2 py-2">{{ item.nombres }}</td>
+
+                        <td class="px-2 py-2">{{ item.nombres }}</td>
+
+                        <td class="px-2 py-2">{{ item.nombres }}</td>
+
+                        <td class="px-2 py-2">{{ item.nombres }}</td>
+
+                        <td class="px-2 py-2">
+                            <p class="underline underline-offset-1 cursor-pointer" (click)="onClickActulizar(i)">
+                                Actualizar</p>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

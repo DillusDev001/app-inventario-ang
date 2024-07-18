@@ -1,0 +1,178 @@
+<div class="flex w-full justify-center h-screen">
+    <form class="flex p-4 gap-4">
+        <div class="grid grid-cols-3 gap-4 h-full">
+
+            <div class="flex flex-col gap-4 w-96">
+                <!-- TITLE -->
+                <app-custom-title [id]="'id_title_'" [label]="'TITLE'"
+                    [class]="'w-full text-center'"></app-custom-title>
+
+                <!-- SUBTITLE -->
+                <app-custom-sub-title [id]="'id_sub_title_'" [label]="'SubTitle'" [class]="''"></app-custom-sub-title>
+
+                <!-- BUTTON 1 -->
+                <div class="flex gap-4 w-full">
+                    <app-custom-button-1 class="w-full" [id]="'id_button_1_accept'" [label]="'Button 1 accept'"
+                        [type]="'accept'" [icon]="''" [class]="'w-full'" [valid]="formLogin.valid"
+                        (click)="onClickLogin()">
+                    </app-custom-button-1>
+
+                    <app-custom-button-1 class="w-full" [id]="'id_button_1_cancel'" [label]="'Button 1 cancel'"
+                        [type]="'cancel'" [icon]="''" [class]="'w-full'" [valid]="formLogin.valid"
+                        (click)="onClickLogin()">
+                    </app-custom-button-1>
+                </div>
+
+                <!-- BUTTON 2 -->
+                <div class="flex gap-4 w-full">
+                    <app-custom-button-2 class="w-full" [id]="'id_button_2_accept'" [label]="'Button 2 accept'"
+                        [type]="'accept'" [icon]="''" [class]="'w-full'" [valid]="formLogin.valid"
+                        (click)="onClickLogin()">
+                    </app-custom-button-2>
+
+                    <app-custom-button-2 class="w-full" [id]="'id_button_2_cancel'" [label]="'Button 2 cancel'"
+                        [type]="'cancel'" [icon]="''" [class]="'w-full'" [valid]="formLogin.valid"
+                        (click)="onClickLogin()">
+                    </app-custom-button-2>
+                </div>
+
+                <!-- INPUT 1 -->
+                <app-custom-input-1 [id]="'id_input_1'" [label]="'Input 1'" [type]="'password'" [autocomplete]="''"
+                    [class]="''" [control]="formLogin.controls.password" [icon]="'fa-solid fa-house'">
+                </app-custom-input-1>
+
+                <!-- INPUT 2 -->
+                <app-custom-input-2 [id]="'id_input_2'" [label]="'Input 2'" [type]="'email'" [autocomplete]="''"
+                    [class]="''" [control]="formLogin.controls.email" [icon]="'fa-solid fa-house'">
+                </app-custom-input-2>
+
+                <div class="flex flex-col gap-4 bg-primary-900 p-4">
+                    <!-- INPUT 1 DARK -->
+                    <app-custom-input-1-dark [id]="'id_input_1_dark'" [label]="'Input 1 Dark'" [type]="'password'"
+                        [autocomplete]="''" [class]="''" [control]="formLogin.controls.password"
+                        [icon]="'fa-solid fa-house'">
+                    </app-custom-input-1-dark>
+
+                    <!-- INPUT 2 DARK -->
+                    <app-custom-input-2-dark [id]="'id_input_2_dark'" [label]="'Input 2 Dark'" [type]="'email'"
+                        [autocomplete]="''" [class]="''" [control]="formLogin.controls.email"
+                        [icon]="'fa-solid fa-house'">
+                    </app-custom-input-2-dark>
+                </div>
+
+                <!-- LABEL 1 -->
+                <app-custom-label-1 [id]="'id_label_1_'" [label]="'Label 1'" [text]="'text'"
+                    [class]="''"></app-custom-label-1>
+
+                <!-- LABEL 2 -->
+                <app-custom-label-2 [id]="'id_label_2_'" [label]="'Label 2'" [text]="'text'"
+                    [class]="''"></app-custom-label-2>
+
+                <!-- LABEL 3 -->
+                <app-custom-label-3 [id]="'id_label_3_'" [label]="'Label 3'" [text]="'text'"
+                    [class]="''"></app-custom-label-3>
+
+                <!-- LABEL 4 -->
+                <app-custom-label-4 [id]="'id_label_4_'" [label]="'Label 4'" [text]="'text'"
+                    [class]="''"></app-custom-label-4>
+            </div>
+
+            <div class="flex flex-col gap-4 w-96">
+                <div class="flex felx-col gap-4 bg-primary-900 p-4 w-full h-max">
+                    <!-- LABEL 1 -->
+                    <app-custom-menu-button class="w-full" [id]="'id_menu_'" [label]="'Selected'"
+                        [icon]="'fa-solid fa-circle-dollar-to-slot fa-lg'" [spanClass]="' hidden'" [selected]="selected"
+                        (click)="onClickMenu('Selected')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button class="w-full" [id]="'id_menu_'" [label]="'Not Selected'"
+                        [icon]="'fa-solid fa-circle-dollar-to-slot fa-lg'" [spanClass]="' hidden'" [selected]="selected"
+                        (click)="onClickMenu('Not Selected')">
+                    </app-custom-menu-button>
+                </div>
+
+                <div class="flex felx-col p-4 w-full h-max">
+
+                    <app-custom-tab-button [id]="'id_menu_'" [label]="'Selected'"
+                        [icon]="'fa-solid fa-circle-dollar-to-slot fa-lg'" [class]="''" [selected]="tabSelected"
+                        (click)="onClickTab('Selected')">
+                    </app-custom-tab-button>
+
+                    <app-custom-tab-button [id]="'id_menu_'" [label]="'Not Selected'"
+                        [icon]="'fa-solid fa-circle-dollar-to-slot fa-lg'" [class]="''" [selected]="tabSelected"
+                        (click)="onClickTab('Not Selected')">
+                    </app-custom-tab-button>
+                </div>
+
+                <!-- LOADING -->
+                <div class="flex justify-center w-full">
+                    <app-custom-my-loading [class]="'text-yellow-500'"></app-custom-my-loading>
+                </div>
+
+                <!-- DROP-DOWN -->
+                <app-custom-drop-down [id]="'id_drop_down'" [label]="'DropDown'" [control]="formLogin.controls.selected"
+                    [class]="''" [data]="data">
+                </app-custom-drop-down>
+
+                <!-- DROP-DOWN-DARK -->
+                <div class="bg-primary-900 p-4 w-full h-max">
+                    <app-custom-drop-down-dark [id]="'id_drop_down_dark'" [label]="'DropDown Dark'"
+                        [control]="formLogin.controls.selected" [class]="''" [data]="data">
+                    </app-custom-drop-down-dark>
+                </div>
+
+                <a [routerLink]="['/auth/forgot']">Forgot Password</a>
+
+                <app-custom-status-indicator [status]="1"></app-custom-status-indicator>
+                <app-custom-status-indicator [status]="0"></app-custom-status-indicator>
+
+            </div>
+
+            <div class="grid grid-cols-4 w-96 text-primary-700">
+                <i class="fa-solid fa-circle-user fa-lg"></i>
+                <i class="fa-solid fa-lock fa-lg"></i>
+                <i class="fa-solid fa-comment-dots fa-lg"></i>
+                <i class="fa-solid fa-shapes fa-lg"></i>
+                <i class="fa-solid fa-caret-up fa-lg"></i>
+                <i class="fa-solid fa-file-invoice-dollar fa-lg"></i>
+                <i class="fa-solid fa-toolbox fa-lg"></i>
+                <i class="fa-solid fa-mobile-screen-button fa-lg"></i>
+                <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                <i class="fa-solid fa-envelope fa-lg"></i>
+                <i class="fa-regular fa-address-card fa-lg"></i>
+                <i class="fa-solid fa-comment fa-lg"></i>
+                <i class="fa-solid fa-file-lines fa-lg"></i>
+
+                <i class="fa-solid fa-trash fa-lg"></i>
+                <i class="fa-solid fa-circle-plus fa-lg"></i>
+                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+
+                <i class="fa-solid fa-hand-holding fa-lg"></i>
+                <i class="fa-solid fa-phone fa-lg"></i>
+                <i class="fa-regular fa-calendar fa-lg"></i>
+                <i class="fa-solid fa-building-columns fa-lg"></i>
+                <i class="fa-solid fa-image fa-lg"></i>
+                <i class="fa-solid fa-xmark fa-lg"></i>
+                <i class="fa-solid fa-person fa-lg"></i>
+                <i class="fa-solid fa-dollar-sign fa-lg"></i>
+                <i class="fa-solid fa-hand-holding-dollar fa-lg"></i>
+                <i class="fa-solid fa-circle-dollar-to-slot fa-lg"></i>
+                <i class="fa-solid fa-building-columns fa-lg"></i>
+                <i class="fa-solid fa-shirt fa-lg"></i>
+                <i class="fa-solid fa-cubes fa-lg"></i>
+                <i class="fa-solid fa-shop fa-lg"></i>
+                <i class="fa-solid fa-people-group fa-lg"></i>
+                <i class="fa-solid fa-users fa-lg"></i>
+                <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                <i class="fa-solid fa-sack-dollar fa-lg"></i>
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </form>
+</div>

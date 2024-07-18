@@ -1,0 +1,26 @@
+<div
+    class="flex overflow-auto absolute top-0 right-0 left-0 justify-center items-center w-full h-full bg-primary-100 bg-opacity-60 backdrop-filter backdrop-blur-sm">
+    <div class="p-4 w-full max-w-md max-h-full">
+        <div class="bg-color-white rounded-lg shadow">
+            <div class="p-4 md:p-5 text-center">
+                <app-custom-title [id]="'id_title_usuario'" [label]="title"
+                    [class]="'w-full text-center uppercase text-primary-500 mb-4'">
+                </app-custom-title>
+
+                <form class="flex flex-col gap-4">
+                    <!-- INPUT 1 -->
+                    <app-custom-input-2 [id]="'id_input_usuario'" [label]="'Usuario'" [type]="'text'"
+                        [autocomplete]="''" [class]="''"
+                        [control]="formUsuario.controls.nombres" [icon]="'fa-solid fa-user fa-lg'">
+                    </app-custom-input-2>
+
+                    <!-- INPUT 2 -->
+                    <app-custom-input-2 [id]="'id_input_password'" [label]="'Contraseña'" [type]="'password'"
+                        [autocomplete]="''" [class]="''"
+                        [control]="formUsuario.controls.apellidos" [icon]="'fa-solid fa-lock fa-lg'"></app-custom-input-2>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

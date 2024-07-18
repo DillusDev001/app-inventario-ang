@@ -1,0 +1,28 @@
+<div class="flex flex-col w-full h-full bg-color-white shadow-lg rounded p-4 overflow-auto">
+    <div class="flex gap-4 overflow-y-hidden overflow-x-auto h-max">
+        <app-custom-tab-button
+            class="w-max"
+            [id]="'id_tab_button_lista'"
+            [label]="'Artículos'"
+            [icon]="''"
+            [class]="'cursor-pointer'"
+            [spanClass]="''"
+            [selected]="selectedTab"
+            (click)="onClickButton('Artículos')" >
+        </app-custom-tab-button>
+
+        <app-custom-tab-button
+            class="w-max"
+            [id]="'id_tab_button_agregar'"
+            [label]="'Agregar'"
+            [icon]="''"
+            [class]="'cursor-pointer'"
+            [spanClass]="''"
+            [selected]="selectedTab"
+            (click)="onClickButton('Agregar')" >
+        </app-custom-tab-button>
+    </div>
+    <div class="relative w-full h-full overflow-auto">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<button [id]="id" class="flex gap-3 items-center h-10 font-medium text-sm px-4 py-1 rounded-lg" type="button"
+    [ngClass]="{ 'cursor-not-allowed': !valid }" [class]="class">
+    <span *ngIf="icon != ''" class="p-1">
+        <i [class]="icon"></i>
+    </span>
+    <p class="w-full">{{ label }}</p>
+</button>

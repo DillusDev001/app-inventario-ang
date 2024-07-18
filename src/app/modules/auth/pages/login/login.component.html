@@ -1,0 +1,41 @@
+<div [ngStyle]="{'background-image': 'url(' + backgroundImageUrl + ')'}"
+    class="background-div w-screen h-screen flex justify-center items-center">
+    <app-custom-my-loading *ngIf="isLoading" [class]="'text-yellow-500'"></app-custom-my-loading>
+
+    <div *ngIf="!isLoading" class="w-max h-max flex flex-col shadow rounded-lg bg-primary-950 p-8">
+        <div class="flex flex-col items-center">
+            <a href="#/shared">
+                <img class="w-72"
+                    src="https://i0.wp.com/www.contosolutions.com/wp-content/uploads/2023/08/logo_holded.png?w=1200&ssl=1"
+                    alt="img">
+            </a>
+            <!--<p class="text-2xl text-center font-bold leading-9 tracking-widest text-primary-50">
+                BIENVENIDO
+            </p>-->
+        </div>
+
+        <div class="flex flex-col gap-2 p-4">
+            <form class="flex flex-col gap-4">
+                <app-custom-input-1-dark [id]="'id_input_usuario'" [label]="'Usuario'" [type]="'email'"
+                    [autocomplete]="''" [class]="''" [control]="formLogin.controls.usuario"
+                    [icon]="'fa-solid fa-circle-user fa-lg'">
+                </app-custom-input-1-dark>
+
+                <app-custom-input-1-dark [id]="'id_input_password'" [label]="'Contraseña'" [type]="'password'"
+                    [autocomplete]="''" [class]="''" [control]="formLogin.controls.password"
+                    [icon]="'fa-solid fa-lock fa-lg'">
+                </app-custom-input-1-dark>
+
+                <app-custom-button-2 [id]="''" [label]="'Ingresar'" [type]="'accept'" [icon]="''" [class]="'w-full'"
+                    [valid]="formLogin.valid && isOnline" (click)="onClickLogin()">
+                </app-custom-button-2>
+            </form>
+
+
+            <a [routerLink]="['/forgot']"
+                class="cursor-pointer w-full font-normal leading-6 text-right text-sm text-primary-300 hover:text-yellow-200">
+                ¿Has olvidado tu contraseña?
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div [class]="class">
+    <div class="flex items-center h-12 gap-2 py-2 px-3 w-full rounded-lg border" [class]="classDiv">
+
+        <span *ngIf="icon != ''" class="p-1" [class]="classIcon">
+            <i [class]="icon"></i>
+        </span>
+
+        <div class="relative w-full">
+
+            <input [type]="type" [id]="id" (blur)="onBlur()" (focus)="onFocus()" [formControl]="control"
+                [autocomplete]="autocomplete"
+                class="pt-2 px-0 pb-0 text-base w-full bg-color-transparent border-0 appearance-none focus:outline-none focus:ring-0 peer"
+                [class]="classInput" placeholder="" />
+
+            <label [for]="id" [class]="classLabel"
+                class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 origin-[0] bg-transparent peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
+                {{ label }}
+            </label>
+
+        </div>
+
+        <button (click)="showOrHiddenPassword()" *ngIf="isPassword" class="p-1 text-color-icon-1 rounded-lg"
+            [class]="classIcon">
+            <i *ngIf="isHidden" class="fa-solid fa-eye"></i>
+            <i *ngIf="!isHidden" class="fa-solid fa-eye-slash"></i>
+        </button>
+    </div>
+</div>

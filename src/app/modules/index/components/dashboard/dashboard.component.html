@@ -1,0 +1,108 @@
+<div class="flex flex-col w-screen h-screen">
+    <!--  -->
+    <div *ngIf="open" class="duration-100 z-10 fixed top-0 left-0 bg-primary-200 bg-opacity-60 w-full h-full backdrop-filter backdrop-blur-sm"
+        (click)="onClickSideBar(false)">
+    </div>
+
+    <!-- Dashboard -->
+    <div class="flex w-screen h-full">
+
+        <!-- Menu -->
+        <nav class="background-div z-50 top:0 fixed top-0 bottom-0 duration-300 w-max h-full shadow-2xl lg:left-0 lg:my-0 lg:w-80 lg:relative border-r border-primary-200"
+            [ngClass]="{ 'left-0'  : open == true, 'left-[-330px]' : open == false }"
+            [ngStyle]="{'background-image': 'url(' + backgroundImageUrl + ')'}">
+
+            <div class="flex flex-col h-full divide-y divide-color-unfocus">
+
+                <!-- Profile -->
+                <div class="flex flex-col items-center p-4">
+                    <img class="h-32 w-32 rounded-full" src="./../../../../../assets/blank-profile.png" alt="">
+                    <p class="text-lg text-color-text-gray">{{ userLogeado.nombres }} {{ userLogeado.apellidos }}</p>
+                    <p class="text-sm text-color-text-gray">{{ userLogeado.rol }}</p>
+                </div>
+                <!-- Menu -->
+                <div class="flex flex-col grow p-4 gap-6 overflow-auto">
+                    <app-custom-menu-button [id]="'id_menu_inicio'" [label]="'Inicio'"
+                        [icon]="'fa-solid fa-shapes fa-lg'" [selected]="menuSelected" 
+                        [link]="'/admin/inicio'" (click)="onClickSetMenuSelected('Inicio')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_articulos'" [label]="'Artículos'"
+                        [icon]="'fa-solid fa-shirt fa-lg'" [selected]="menuSelected" 
+                        [link]="'/admin/producto/lista'" (click)="onClickSetMenuSelected('Artículos')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_stock'" [label]="'Stock'" [icon]="'fa-solid fa-cubes fa-lg'"
+                        [selected]="menuSelected"  (click)="onClickSetMenuSelected('Stock')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_sucursal'" [label]="'Sucursal'"
+                        [icon]="'fa-solid fa-shop fa-lg'" [selected]="menuSelected" 
+                        (click)="onClickSetMenuSelected('Sucursal')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_clientes'" [label]="'Clientes'"
+                        [icon]="'fa-solid fa-people-group fa-lg'" [selected]="menuSelected" 
+                        (click)="onClickSetMenuSelected('Clientes')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_compras'" [label]="'Compras'"
+                        [icon]="'fa-solid fa-cart-shopping fa-lg'" [selected]="menuSelected" 
+                        (click)="onClickSetMenuSelected('Compras')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_ventas'" [label]="'Ventas'"
+                        [icon]="'fa-solid fa-sack-dollar fa-lg'" [selected]="menuSelected" 
+                        (click)="onClickSetMenuSelected('Ventas')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_usuarios'" [label]="'Usuarios'"
+                        [icon]="'fa-solid fa-users fa-lg'" [selected]="menuSelected" 
+                        [link]="'/admin/usuario/lista'" (click)="onClickSetMenuSelected('Usuarios')">
+                    </app-custom-menu-button>
+                </div>
+
+                <div class="py-1 text-color-unfocus underline cursor-pointer text-center"
+                    (click)="onClickCerrarSesion()">
+                    <a>Cerrar Sesión</a>
+                </div>
+
+                <!-- Marca -->
+                <div class="py-2 flex flex-col items-center">
+                    <img class=" h-12 rounded-full fill-color-icon-1"
+                        src="https://i0.wp.com/www.contosolutions.com/wp-content/uploads/2023/08/logo_holded.png?w=1200&ssl=1"
+                        alt="">
+                    <p class="text-xs text-color-text text-center font-medium">
+
+                    </p>
+                </div>
+
+            </div>
+
+        </nav>
+
+        <!-- Header/Holder -->
+        <div class="flex flex-col w-full h-full">
+
+            <header class="lg:hidden flex items-center p-5 shadow-lg bg-white w-full h-16 border-b border-primary-200">
+
+                <!-- menu burguer -->
+                <span class="lg:hidden p-2 text-color-text cursor-pointer mr-2" (click)="onClickSideBar(true)">
+                    <i class="fa-solid fa-bars fa-lg"></i>
+                </span>
+
+                <!-- Title -->
+                <p class="font-semibold text-xl text-color-text w-max flex-grow">{{ title }}</p>
+
+            </header>
+
+            <!-- holder -->
+            <div class="relative p-4 w-full h-full overflow-auto bg-primary-100">
+                <router-outlet></router-outlet>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
