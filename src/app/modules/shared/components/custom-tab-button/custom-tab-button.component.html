@@ -1,13 +1,13 @@
-<div [class]="class" [ngClass]="selected == label ? classDiv1Selected:classDiv1NotSelected" class="h-12">
-    <div [ngClass]="selected == label ? classDivSelected:classDivNotSelected " class="items-center justify-center">
-        <span *ngIf="icon != ''" class="p-1" [ngClass]="selected == label ? classSpanSelected:classSpanNotSelected ">
+<div [class]="class" [ngClass]="selected == label ? classDiv1Selected : classDiv1NotSelected" class="h-12">
+    <div [ngClass]="selected == label ? classDivSelected : classDivNotSelected " class="items-center justify-center">
+        <span *ngIf="icon != ''" class="p-1" [ngClass]="selected == label ? classSpanSelected : classSpanNotSelected ">
             <i [class]="icon"></i>
         </span>
-        <p class="font-medium text-lg grow" [ngClass]="selected == label ? classParraSelected:classParraNotSelected ">
+        <p class="font-medium text-lg grow" [ngClass]="selected == label ? classParraSelected : classParraNotSelected ">
             {{ label }}
         </p>
 
     </div>
 
-    <span [ngClass]="selected == label ? classLineSelected:classLineNotSelected "></span>
+    <span class="hidden" [ngClass]="selected == label ? classLineSelected : classLineNotSelected "></span>
 </div>

@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { StockSucursalRoutingModule } from './stock-sucursal-routing.module';
+import { StockSucursalComponent } from './stock-sucursal.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    StockSucursalComponent
+  ],
   imports: [
     CommonModule,
     StockSucursalRoutingModule

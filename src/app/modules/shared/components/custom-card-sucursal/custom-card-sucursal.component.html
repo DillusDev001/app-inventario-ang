@@ -1,0 +1,39 @@
+<div class="flex flex-col items-center h-max w-max xl:w-full rounded-lg py-2 px-4 gap-4 shadow-md transform hover:translate-y-[-2px] hover:shadow-lg transition-all duration-300"
+    [ngClass]="sucursal.id_sucursal === id_selected ? 'bg-yellow-300' : 'bg-primary-50 hover:bg-yellow-200 cursor-pointer'"
+    [class]="class" (click)="onClickCard()">
+    <!-- Title -->
+    <p class="w-full text-center font-bold text-xl text-color-text tracking-wider">
+        {{ sucursal.nombre }}
+    </p>
+
+    <div *ngIf="sucursal.id_sucursal === id_selected" class="hidden xl:block w-full">
+        <div class="flex flex-col w-full gap-1 px-10">
+            <p class="text-sm w-full text-left text-color-text">
+                <strong>Dirección: </strong>{{ sucursal.direccion }}
+            </p>
+
+            <p class="text-sm w-full text-left text-color-text">
+                <strong>Teléfono: </strong>{{ sucursal.telefono }}
+            </p>
+
+            <p class="text-sm w-full text-left text-color-text">
+                <strong>Descripción: </strong>{{ sucursal.descripcion }}
+            </p>
+
+            <p class="text-sm w-full text-left text-color-text">
+                <strong>Encargado: </strong>{{ sucursal.encargado.nombres + ' ' + sucursal.encargado.apellidos }}
+            </p>
+        </div>
+    </div>
+
+    <div *ngIf="sucursal.id_sucursal === id_selected" class="flex md:flex-row xl:flex-row gap-4 items-center">
+        <app-custom-button-1 [id]="'id_btn_editar_sucursal'" [label]="'Editar'" [type]="'cancel'"
+            [icon]="'fa-solid fa-pen-to-square fa-lg'" [class]="''" [valid]="true" (click)="onClickEdit($event)">
+        </app-custom-button-1>
+
+        <app-custom-button-1 [id]="'id_btn_agregar_almacen'" [label]="'Almacen'" [type]="'cancel'"
+            [icon]="'fa-solid fa-circle-plus fa-lg'" [class]="''" [valid]="true"
+            (click)="onClickAgregarAlmacen($event)">
+        </app-custom-button-1>
+    </div>
+</div>

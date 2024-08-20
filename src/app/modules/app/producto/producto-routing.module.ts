@@ -5,15 +5,8 @@ import { ListaProductoComponent } from './components/lista-producto/lista-produc
 import { AgregarProductoComponent } from './components/agregar-producto/agregar-producto.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '', pathMatch: 'full' },
-  {
-    path: '',
-    component: IndexProductoComponent,
-    children: [
-      { path: 'lista', component: ListaProductoComponent },
-      { path: 'agregar', component: AgregarProductoComponent },
-    ]
-  },
+  //{ path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '', component: ListaProductoComponent },
 ];
 
 @NgModule({

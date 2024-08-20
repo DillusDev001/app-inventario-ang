@@ -6,6 +6,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { catchError, timeout } from 'rxjs';
 import { of } from 'rxjs';
 import { ApiResult } from 'src/app/common/interfaces/api/api.result';
+import { ResponseEmitter } from 'src/app/common/interfaces/emitter/response.emitter';
 import { DataLocalStorage } from 'src/app/common/interfaces/local/data-local-storage';
 import { goForGot, goLogin, goShared } from 'src/app/common/router/auth.route';
 import { goAdmin } from 'src/app/common/router/index.route';
@@ -65,19 +66,8 @@ export class LoginComponent implements OnInit {
   // loading spinner
   isLoading: boolean = false;
 
-  // Info Alert
-  alertInfo: boolean = false;
-
-  // Confirmacion Alert
-  alertConfirmacion: boolean = false;
-
-  // Error Alert
-  alertError: boolean = false;
-
   // Mensaje Alert
   msgAlert: string = '';
-
-  result!: ApiResult;
 
   // ================  ================ //
   formLogin = new FormGroup({
@@ -86,6 +76,13 @@ export class LoginComponent implements OnInit {
   });
 
   backgroundImageUrl: string = 'assets/bg.png'; // Ruta de tu imagen
+
+  showUsuarioAlert: boolean = false;
+
+  showCode: boolean = false;
+
+  rolUsuarioAlert: string = '';
+  autorizacionUsuarioAlert: number = 0;
 
 
   /** ---------------------------------------- Methods ---------------------------------------- **/
@@ -105,6 +102,10 @@ export class LoginComponent implements OnInit {
     if (this.formLogin.valid && this.isOnline) {
       this.login();
     }
+  }
+
+  onClickRegistrarse() {
+    this.showCode = true;
   }
 
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
@@ -149,7 +150,24 @@ export class LoginComponent implements OnInit {
   /** ---------------------------------- Onclick file import ---------------------------------- **/
 
   /** ---------------------------------------- Receiver --------------------------------------- **/
+  onReciveResponseUsuarioAlert(event: ResponseEmitter) {
+    if (event.bool) {
+      this.formLogin.controls.usuario.setValue(event.data['usuario'])
+    }
+      this.showUsuarioAlert = false;
+  }
 
+  codeReceiver(event: ResponseEmitter) {
+    if (event.bool) {
+      this.rolUsuarioAlert = String(event.data['rol'])
+      this.autorizacionUsuarioAlert = Number(event.data['autorizacion'])
+
+      this.showCode = false;
+      this.showUsuarioAlert = true;
+    } else {
+      this.showCode = false;
+    }
+  }
   /** --------------------------------------- ShowAlerts -------------------------------------- **/
   customSuccessToast(msg: string) {
     this.toast.success(msg, {

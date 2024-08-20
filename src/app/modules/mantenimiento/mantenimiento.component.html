@@ -1,0 +1,27 @@
+<div class="flex flex-col w-full h-full bg-color-white shadow-lg rounded p-4 overflow-auto">
+    <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+    <div *ngIf="!isLoading" class="flex gap-2 overflow-y-hidden overflow-x-auto h-max px-4">
+        <app-custom-tab-button class="w-max" [id]="'id_tab_button_categoria'" [label]="'Categoría'" [icon]="''"
+            [class]="'cursor-pointer'" [spanClass]="''" [selected]="selectedTab" (click)="onClickButton('Categoría')">
+        </app-custom-tab-button>
+
+        <app-custom-tab-button class="w-max" [id]="'id_tab_button_material'" [label]="'Material'" [icon]="''"
+            [class]="'cursor-pointer'" [spanClass]="''" [selected]="selectedTab" (click)="onClickButton('Material')">
+        </app-custom-tab-button>
+
+        <app-custom-tab-button class="w-max" [id]="'id_tab_button_color'" [label]="'Color'" [icon]="''"
+            [class]="'cursor-pointer'" [spanClass]="''" [selected]="selectedTab" (click)="onClickButton('Color')">
+        </app-custom-tab-button>
+
+        <app-custom-tab-button class="w-max" [id]="'id_tab_button_talla'" [label]="'Talla'" [icon]="''"
+            [class]="'cursor-pointer'" [spanClass]="''" [selected]="selectedTab" (click)="onClickButton('Talla')">
+        </app-custom-tab-button>
+    </div>
+    <div class="w-full h-full">
+        <app-categoria *ngIf="selectedTab == 'Categoría'"></app-categoria>
+        <app-material *ngIf="selectedTab == 'Material'"></app-material>
+        <app-color *ngIf="selectedTab == 'Color'"></app-color>
+        <app-talla *ngIf="selectedTab == 'Talla'"></app-talla>
+    </div>
+</div>

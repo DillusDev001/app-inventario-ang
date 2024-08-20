@@ -1,0 +1,18 @@
+<div class="relative flex flex-col w-full h-full shadow-lg overflow-auto bg-color-white p-4">
+
+    <div class="flex px-4 gap-2 overflow-y-hidden overflow-x-auto h-max">
+        <app-custom-tab-button [id]="'id_menu_general'" [label]="'General'"
+            [icon]="'fa-solid fa-cubes fa-lg'" [class]="''" [selected]="tabSelected"
+            (click)="onClickTab('General')">
+        </app-custom-tab-button>
+
+        <app-custom-tab-button [id]="'id_menu_sucursal'" [label]="'Sucursal'"
+            [icon]="'fa-solid fa-shop fa-lg'" [class]="''" [selected]="tabSelected"
+            (click)="onClickTab('Sucursal')">
+        </app-custom-tab-button>
+    </div>
+    
+    <div class="w-full h-full border border-primary-300 rounded-lg shadow-lg overflow-hidden">
+        <router-outlet></router-outlet>
+    </div>
+</div>

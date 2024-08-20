@@ -1,6 +1,10 @@
-<div class="flex flex-col justify-center w-full h-full items-center shadow-lg overflow-auto pt-4 gap-4">
+<div
+    class="relative flex flex-col justify-center w-full h-full items-center shadow-lg overflow-auto pt-4 gap-4 bg-color-white p-4">
 
     <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+    <app-agregar-producto *ngIf="showAddProducto" [cod_producto]="cod_prod_selected" [type]="productoAddType"
+        (response)="onReciveResponseAddProducto($event)"></app-agregar-producto>
 
     <!-- Botones Busqueda -->
     <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
@@ -18,9 +22,19 @@
                         [control]="formBusqueda.controls.value" [icon]="''">
                     </app-custom-input-2>
 
-                    <app-custom-button-1 class="w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
-                        [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="'w-full'"
+                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="''"
                         [valid]="formBusqueda.valid" (click)="onClickBusqueda()">
+                    </app-custom-button-1>
+
+                    <app-custom-button-2 class="w-full md:w-max h-12" [id]="'id_button_agregar'" [label]="'Agregar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-plus fa-lg'" [class]="''" [valid]="true"
+                        (click)="onClickAgregar()">
+                    </app-custom-button-2>
+
+                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_limpiar'" [label]="'Limpiar'"
+                        [type]="'cancel'" [icon]="'fa-solid fa-broom fa-lg'" [class]="''" [valid]="true"
+                        (click)="onClickLimpiar()">
                     </app-custom-button-1>
 
                 </form>
@@ -33,59 +47,63 @@
         <!-- Table y Nav -->
         <div class="overflow-auto shadow-md border rounded-lg grow">
             <table
-                class="w-max md:w-full text-sm text-center rtl:text-right text-primary-500 table-fixed md:table-auto">
+                class="w-max md:w-full text-sm text-center rtl:text-right text-primary-900 table-fixed md:table-auto">
                 <thead class="text-sm text-primary-800 uppercase bg-primary-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Código Cotización
-                        </th>
+                        <th scope="col" class="px-6 py-3">#</th>
 
-                        <th scope="col" class="px-6 py-3">
-                            Fecha Solicitud
-                        </th>
+                        <th scope="col" class="px-6 py-3">Código Producto</th>
 
-                        <th scope="col" class="px-6 py-3">
-                            Fecha Emisión
-                        </th>
+                        <th scope="col" class="px-6 py-3">Código Interno</th>
 
-                        <th scope="col" class="px-6 py-3">
-                            Costo Total
-                        </th>
+                        <th scope="col" class="px-6 py-3">Categoría</th>
 
-                        <th scope="col" class="px-6 py-3">
-                            Descuento
-                        </th>
+                        <th scope="col" class="px-6 py-3">Talla</th>
 
-                        <th scope="col" class="px-6 py-3">
-                            Total
-                        </th>
+                        <th scope="col" class="px-6 py-3">Color</th>
 
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3">Precio Unitario</th>
 
-                        </th>
+                        <th scope="col" class="px-6 py-3">Precio Mayor</th>
+
+                        <th scope="col" class="px-6 py-3"></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr class="text-primary-800 bg-white border-b hover:bg-primary-50"
-                        *ngFor="let item of dataUsuarios; index as i">
-                        <td class="px-2 py-2">{{ item.nombres }}</td>
+                    <ng-container *ngFor="let item of dataProductos; index as i">
+                        <tr *ngIf="item.estado === 1 || (item.estado === 0 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador'))"
+                            [ngClass]="{'text-red-800': item.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
+                            class="text-primary-800 bg-white border-b">
+                            <th scope="col" class="px-6 py-3">{{ i + 1 }}</th>
 
-                        <td class="px-2 py-2">{{ item.nombres }}</td>
+                            <th scope="col" class="px-6 py-3">{{ item.cod_producto }}</th>
 
-                        <td class="px-2 py-2">{{ item.nombres }}</td>
+                            <th scope="col" class="px-6 py-3">{{ item.codigo }}</th>
 
-                        <td class="px-2 py-2">{{ item.nombres }}</td>
+                            <th scope="col" class="px-6 py-3">{{ item.categoria }}</th>
 
-                        <td class="px-2 py-2">{{ item.nombres }}</td>
+                            <th scope="col" class="px-6 py-3">{{ item.talla }}</th>
 
-                        <td class="px-2 py-2">{{ item.nombres }}</td>
+                            <th scope="col" class="px-6 py-3">{{ item.color }}</th>
 
-                        <td class="px-2 py-2">
-                            <p class="underline underline-offset-1 cursor-pointer" (click)="onClickActulizar(i)">
-                                Actualizar</p>
-                        </td>
-                    </tr>
+                            <th scope="col" class="px-6 py-3">{{ item.precio_unitario | currency:'BOB':'Bs. '}}</th>
+
+                            <th scope="col" class="px-6 py-3">{{ item.precio_mayor | currency:'BOB':'Bs. '}}</th>
+
+                            <td class="px-2 py-2 flex gap-4">
+                                <p class="underline underline-offset-1 cursor-pointer text-info-700"
+                                    (click)="onClickActulizar(i)">Actualizar</p>
+                                <p *ngIf="item.estado === 1"
+                                    class="underline underline-offset-1 cursor-pointer text-red-700"
+                                    (click)="onClickEliminar(i)">Eliminar</p>
+                                <p *ngIf="item.estado === 0"
+                                    class="underline underline-offset-1 cursor-pointer text-info-700"
+                                    (click)="onClickHabilitar(i)">Habilitar</p>
+                            </td>
+                        </tr>
+                    </ng-container>
+
                 </tbody>
 
             </table>

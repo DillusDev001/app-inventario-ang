@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
         this.activeUrl = this.router.url;
         this.updateSelectedMenuItemFromUrl();
       }
-    });  
+    });
 
 
   }
@@ -104,10 +104,22 @@ export class DashboardComponent implements OnInit {
         this.title = 'Inicio';
         break;
 
-      case '/admin/producto/lista':
-      case '/admin/producto/agregar':
+      case '/admin/producto':
+      case '/admin/producto':
         this.menuSelected = 'Artículos';
         this.title = 'Artículos';
+        break;
+
+      case '/admin/stock':
+      case '/admin/stock/general':
+      case '/admin/stock/sucursal':
+        this.menuSelected = 'Stock';
+        this.title = 'Stock';
+        break;
+
+      case '/admin/sucursal':
+        this.menuSelected = 'Sucursal';
+        this.title = 'Sucursal';
         break;
 
 
@@ -117,9 +129,12 @@ export class DashboardComponent implements OnInit {
         this.menuSelected = 'Usuarios';
         this.title = 'Usuarios';
         break;
-    }
 
-    console.log(currentUrl)
+      case '/admin/mantenimiento':
+        this.menuSelected = 'Mantenimiento';
+        this.title = 'Mantenimiento';
+        break;
+    }
   }
 
   scrollSelectedItemIntoView() {

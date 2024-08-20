@@ -1,0 +1,74 @@
+<div class="flex flex-col justify-center w-full h-full items-center shadow-lg overflow-auto gap-4">
+
+    <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+    <!-- Botones Busqueda -->
+    <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
+        <!-- Botones y buscador -->
+        <div class="flex flex-col md:flex-row gap-2 h-max border rounded-lg border-color-text p-2  md:divide-x">
+            <div class="flex flex-grow w-full">
+                <form [formGroup]="formMaterial" class="flex flex-col md:flex-row gap-2 w-full">
+                    <app-custom-input-2 class="h-12 w-full md:h-full md:flex-grow" [id]="'id_busqueda_value'"
+                        [label]="'Material...'" [type]="'text'" [autocomplete]="''" [class]="''"
+                        [control]="formMaterial.controls.material" [icon]="''">
+                    </app-custom-input-2>
+
+                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="btnText"
+                        [type]="'accept'" [icon]="''" [class]="'w-full'" [valid]="formMaterial.valid"
+                        (click)="onClickAceptar()">
+                    </app-custom-button-1>
+
+                    <app-custom-button-1 *ngIf="btnText == 'Actualizar'" class="w-full md:w-max h-12"
+                        [id]="'id_button_busqueda'" [label]="'Cancelar'" [type]="'accept'" [icon]="''"
+                        [class]="'w-full bg-color-error'" [valid]="true" (click)="onClickCancelar()">
+                    </app-custom-button-1>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full">
+        <!-- Table y Nav -->
+        <div class="overflow-auto shadow-md border rounded-lg grow">
+            <table
+                class="w-max md:w-full text-sm text-center rtl:text-right text-primary-500 table-fixed md:table-auto">
+                <thead class="text-sm text-primary-800 uppercase bg-primary-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">#</th>
+
+                        <th scope="col" class="px-6 py-3">Categoría</th>
+
+                        <th scope="col" class="px-6 py-3">Usuario</th>
+
+                        <th scope="col" class="px-6 py-3">Fecha</th>
+
+                        <th scope="col" class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="text-primary-800 bg-white border-b hover:bg-primary-50"
+                        *ngFor="let item of data; index as i">
+                        <td class="px-2 py-2">{{ i + 1 }}</td>
+
+                        <td class="px-2 py-2">{{ item.material }}</td>
+
+                        <td class="px-2 py-2">{{ item.user_crea }}</td>
+
+                        <td class="px-2 py-2">{{ item.fec_crea | date: 'dd-MM-yyyy' }}</td>
+
+                        <td class="px-2 py-2">
+                            <p class="underline underline-offset-1"
+                                [ngClass]="btnText == 'Agregar' ? 'cursor-pointer' : 'cursor-not-allowed'"
+                                (click)="onClickActulizar(i)">
+                                Actualizar
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

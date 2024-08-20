@@ -36,6 +36,18 @@
                 class="cursor-pointer w-full font-normal leading-6 text-right text-sm text-primary-300 hover:text-yellow-200">
                 ¿Has olvidado tu contraseña?
             </a>
+
+            <br>
+
+            <app-custom-button-1 [id]="''" [label]="'Registrarse'" [type]="'cancel'" [icon]="''" [class]="'w-full'"
+                [valid]="formLogin.valid && isOnline" (click)="onClickRegistrarse()">
+            </app-custom-button-1>
         </div>
     </div>
+
+    <app-agregar-usuario *ngIf="!isLoading && !showCode && showUsuarioAlert" [type]="'nuevo'" [title]="'Nuevo Usuario'"
+        [usuario]="''" [rol]="rolUsuarioAlert" [autorizacion]="autorizacionUsuarioAlert" (response)="onReciveResponseUsuarioAlert($event)">
+    </app-agregar-usuario>
+
+    <app-custom-code *ngIf="!isLoading && showCode" (response)="codeReceiver($event)"></app-custom-code>
 </div>

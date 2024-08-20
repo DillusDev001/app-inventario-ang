@@ -1,6 +1,7 @@
 <div class="flex flex-col w-screen h-screen">
     <!--  -->
-    <div *ngIf="open" class="duration-100 z-10 fixed top-0 left-0 bg-primary-200 bg-opacity-60 w-full h-full backdrop-filter backdrop-blur-sm"
+    <div *ngIf="open"
+        class="duration-100 z-10 fixed top-0 left-0 bg-primary-200 bg-opacity-60 w-full h-full backdrop-filter backdrop-blur-sm"
         (click)="onClickSideBar(false)">
     </div>
 
@@ -8,7 +9,7 @@
     <div class="flex w-screen h-full">
 
         <!-- Menu -->
-        <nav class="background-div z-50 top:0 fixed top-0 bottom-0 duration-300 w-max h-full shadow-2xl lg:left-0 lg:my-0 lg:w-80 lg:relative border-r border-primary-200"
+        <nav class="background-div z-50 top:0 fixed top-0 bottom-0 duration-300 w-max h-full shadow-2xl lg:left-0 lg:my-0 lg:w-80 lg:relative"
             [ngClass]="{ 'left-0'  : open == true, 'left-[-330px]' : open == false }"
             [ngStyle]="{'background-image': 'url(' + backgroundImageUrl + ')'}">
 
@@ -23,42 +24,48 @@
                 <!-- Menu -->
                 <div class="flex flex-col grow p-4 gap-6 overflow-auto">
                     <app-custom-menu-button [id]="'id_menu_inicio'" [label]="'Inicio'"
-                        [icon]="'fa-solid fa-shapes fa-lg'" [selected]="menuSelected" 
-                        [link]="'/admin/inicio'" (click)="onClickSetMenuSelected('Inicio')">
+                        [icon]="'fa-solid fa-shapes fa-lg'" [selected]="menuSelected" [link]="'/admin/inicio'"
+                        (click)="onClickSetMenuSelected('Inicio')">
                     </app-custom-menu-button>
 
                     <app-custom-menu-button [id]="'id_menu_articulos'" [label]="'Artículos'"
-                        [icon]="'fa-solid fa-shirt fa-lg'" [selected]="menuSelected" 
-                        [link]="'/admin/producto/lista'" (click)="onClickSetMenuSelected('Artículos')">
+                        [icon]="'fa-solid fa-shirt fa-lg'" [selected]="menuSelected" [link]="'/admin/producto'"
+                        (click)="onClickSetMenuSelected('Artículos')">
                     </app-custom-menu-button>
 
-                    <app-custom-menu-button [id]="'id_menu_stock'" [label]="'Stock'" [icon]="'fa-solid fa-cubes fa-lg'"
-                        [selected]="menuSelected"  (click)="onClickSetMenuSelected('Stock')">
+                    <app-custom-menu-button [id]="'id_menu_stock'" [label]="'Stock'" 
+                        [icon]="'fa-solid fa-cubes fa-lg'" [selected]="menuSelected" [link]="'/admin/stock'" 
+                        (click)="onClickSetMenuSelected('Stock')">
                     </app-custom-menu-button>
 
                     <app-custom-menu-button [id]="'id_menu_sucursal'" [label]="'Sucursal'"
-                        [icon]="'fa-solid fa-shop fa-lg'" [selected]="menuSelected" 
+                        [icon]="'fa-solid fa-shop fa-lg'" [selected]="menuSelected" [link]="'/admin/sucursal'"
                         (click)="onClickSetMenuSelected('Sucursal')">
                     </app-custom-menu-button>
 
                     <app-custom-menu-button [id]="'id_menu_clientes'" [label]="'Clientes'"
-                        [icon]="'fa-solid fa-people-group fa-lg'" [selected]="menuSelected" 
+                        [icon]="'fa-solid fa-people-group fa-lg'" [selected]="menuSelected"
                         (click)="onClickSetMenuSelected('Clientes')">
                     </app-custom-menu-button>
 
                     <app-custom-menu-button [id]="'id_menu_compras'" [label]="'Compras'"
-                        [icon]="'fa-solid fa-cart-shopping fa-lg'" [selected]="menuSelected" 
+                        [icon]="'fa-solid fa-cart-shopping fa-lg'" [selected]="menuSelected"
                         (click)="onClickSetMenuSelected('Compras')">
                     </app-custom-menu-button>
 
                     <app-custom-menu-button [id]="'id_menu_ventas'" [label]="'Ventas'"
-                        [icon]="'fa-solid fa-sack-dollar fa-lg'" [selected]="menuSelected" 
+                        [icon]="'fa-solid fa-sack-dollar fa-lg'" [selected]="menuSelected"
                         (click)="onClickSetMenuSelected('Ventas')">
                     </app-custom-menu-button>
 
                     <app-custom-menu-button [id]="'id_menu_usuarios'" [label]="'Usuarios'"
-                        [icon]="'fa-solid fa-users fa-lg'" [selected]="menuSelected" 
-                        [link]="'/admin/usuario/lista'" (click)="onClickSetMenuSelected('Usuarios')">
+                        [icon]="'fa-solid fa-users fa-lg'" [selected]="menuSelected" [link]="'/admin/usuario/lista'"
+                        (click)="onClickSetMenuSelected('Usuarios')">
+                    </app-custom-menu-button>
+
+                    <app-custom-menu-button [id]="'id_menu_mantenimiento'" [label]="'Mantenimiento'"
+                        [icon]="'fa-solid fa-users fa-lg'" [selected]="menuSelected" [link]="'/admin/mantenimiento'"
+                        (click)="onClickSetMenuSelected('Mantenimiento')">
                     </app-custom-menu-button>
                 </div>
 
@@ -82,17 +89,18 @@
         </nav>
 
         <!-- Header/Holder -->
-        <div class="flex flex-col w-full h-full">
+        <div class="flex flex-col w-full h-full overflow-auto">
 
-            <header class="lg:hidden flex items-center p-5 shadow-lg bg-white w-full h-16 border-b border-primary-200">
+            <header class="lg:hidden flex items-center p-5 shadow-lg bg-white w-full h-16 border-b border-primary-200"
+                [ngStyle]="{'background-image': 'url(' + backgroundImageUrl + ')'}">
 
                 <!-- menu burguer -->
-                <span class="lg:hidden p-2 text-color-text cursor-pointer mr-2" (click)="onClickSideBar(true)">
+                <span class="p-2 text-color-white cursor-pointer mr-2" (click)="onClickSideBar(true)">
                     <i class="fa-solid fa-bars fa-lg"></i>
                 </span>
 
                 <!-- Title -->
-                <p class="font-semibold text-xl text-color-text w-max flex-grow">{{ title }}</p>
+                <p class="font-semibold text-xl text-color-white w-max flex-grow">{{ title }}</p>
 
             </header>
 

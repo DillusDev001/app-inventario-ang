@@ -5,7 +5,9 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { ApiResult } from 'src/app/common/interfaces/api/api.result';
 import { DataLocalStorage } from 'src/app/common/interfaces/local/data-local-storage';
 import { goLogin } from 'src/app/common/router/auth.route';
+import { NetworkStatusService } from 'src/app/common/services/network-status.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
+import { UsuarioService } from 'src/app/common/utils/app/usuario/usuario.service';
 import { arrayPreguntas } from 'src/app/common/utils/local/arrays/common.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
 
@@ -18,18 +20,25 @@ export class ForgotComponent {
   /** -------------------------------------- Constructor -------------------------------------- **/
   constructor(
     private router: Router,
-    private toast: HotToastService
+    private toast: HotToastService,
+    private networkStatusService: NetworkStatusService,
+    private usuarioService: UsuarioService
   ) {
-    
+
   }
 
   /** ---------------------------------------- OnInit ----------------------------------------- **/
   ngOnInit(): void {
-
+    this.isOnline = this.networkStatusService.isOnline;
+    this.networkStatusService.isOnline$.subscribe(status => {
+      this.isOnline = status;
+    });
   }
 
   /** ---------------------------------- Variables de Inicio ---------------------------------- **/
   // ================ INICIO ================ //
+  isOnline!: boolean;
+
   // Data Local Storeage - Variable
   dataLocalStorage: DataLocalStorage = {
     usuario: null,
@@ -72,9 +81,39 @@ export class ForgotComponent {
   /** ---------------------------------------- Methods ---------------------------------------- **/
 
   /** ------------------------------------ Methods onClick ------------------------------------ **/
-  onClickForgot() { }
+  onClickForgot() {
+    if (this.formForgot.valid) {
+      if (this.isOnline) {
+        this.isLoading = true;
+
+        const data = {
+          usuario: this.formForgot.value.usuario,
+          pregunta: this.formForgot.value.pregunta,
+          respuesta: this.formForgot.value.respuesta,
+          password: this.formForgot.value.password
+        } as Usuario
+
+        this.usuarioActualizar(data.usuario, data);
+      } else {
+        this.customErrorToast('No hay conexión a internet!!!')
+      }
+    }
+  }
 
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
+  usuarioActualizar(usuario: string, data: Usuario) {
+    this.usuarioService.usuarioForgot(usuario, data).subscribe(result => {
+      result as ApiResult;
+
+      if (result.boolean) {
+        this.customSuccessToast(result.message)
+        goLogin(this.router);
+      } else {
+        this.customErrorToast(result.message)
+        this.isLoading = false;
+      }
+    });
+  }
 
   /** ---------------------------------- Onclick file import ---------------------------------- **/
 

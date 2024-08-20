@@ -17,36 +17,41 @@ export const arrayBusquedaUsuario = [
     }
 ]
 
-export const arrayBusquedaCotizacion = [
+export const arrayBusquedaProducto = [
     {
-        data: 'Código de Cotización',
-        value: 'cod_cotizacion'
+        data: 'Cod Producto',
+        value: 'cod_producto'
     },
-]
-
-export const arrayBusquedaPersona = [
-    { value: 'nombre_persona', data: 'Nombre Persona' },
-    { value: 'razon', data: 'Razón' },
-    { value: 'nit', data: 'NIT' },
-    { value: 'email', data: 'Email' },
-    { value: 'celular', data: 'Celular' },
-]
-
-export const arrayBusquedaEmpresa = [
-    { value: 'razon_social', data: 'Razón Social' },
-    { value: 'ciudad', data: 'Ciudad' },
-    { value: 'pais', data: 'País' },
-    { value: 'nit', data: 'NIT' },
-]
-
-export const arrayBusquedaProveedor = [
-    { value: 'razon', data: 'Razón Social' },
-    { value: 'nit', data: 'NIT' },
-    { value: 'banco', data: 'Banco' },
-    { value: 'beneficiario', data: 'Beneficiario' },
-    { value: 'moneda', data: 'Moneda' },
-]
-
-export const arrayBusquedaParametro = [
-    { value: 'nombre', data: 'Parámetro' }
+    {
+        data: 'Código',
+        value: 'codigo'
+    },
+    {
+        data: 'Tipo',
+        value: 'tipo'
+    },
+    {
+        data: 'Categoría',
+        value: 'categoria'
+    },
+    {
+        data: 'Talla',
+        value: 'talla'
+    },
+    {
+        data: 'Color',
+        value: 'color'
+    },
+    {
+        data: 'Material',
+        value: 'material'
+    },
+    {
+        data: 'Precio Unitario',
+        value: 'precio_unitario'
+    },
+    {
+        data: 'Precio x Mayor',
+        value: 'precio_mayor'
+    },
 ]

@@ -24,19 +24,36 @@ import { CustomDropDownComponent } from './components/custom-drop-down/custom-dr
 import { CustomDropDownDarkComponent } from './components/custom-drop-down-dark/custom-drop-down-dark.component';
 import { CustomConnectionStatusComponent } from './components/custom-connection-status/custom-connection-status.component';
 import { CustomStatusIndicatorComponent } from './components/custom-status-indicator/custom-status-indicator.component';
+import { CustomCodeComponent } from './components/custom-code/custom-code.component';
+import { CustomIconComponent } from './components/custom-icon/custom-icon.component';
+import { CustomCardSucursalComponent } from './components/custom-card-sucursal/custom-card-sucursal.component';
+import { CustomCardAlmacenComponent } from './components/custom-card-almacen/custom-card-almacen.component';
+import { CustomAddSucursalComponent } from './components/custom-add-sucursal/custom-add-sucursal.component';
+import { CustomAddAlmacenComponent } from './components/custom-add-almacen/custom-add-almacen.component';
+import { CustomPopoverProductoComponent } from './components/custom-popover-producto/custom-popover-producto.component';
 
 
 @NgModule({
   declarations: [
+    CustomAddSucursalComponent,
+    CustomAddAlmacenComponent,
+
     CustomAlertInput1Component,
 
     CustomButton1Component,
     CustomButton2Component,
 
+    CustomCardAlmacenComponent,
+    CustomCardSucursalComponent,
+
+    CustomCodeComponent,
+
     CustomConnectionStatusComponent,
 
     CustomDropDownComponent,
     CustomDropDownDarkComponent,
+
+    CustomIconComponent,
 
     CustomInput1Component,
     CustomInput1DarkComponent,
@@ -46,6 +63,8 @@ import { CustomStatusIndicatorComponent } from './components/custom-status-indic
     CustomMenuButtonComponent,
 
     CustomMyLoadingComponent,
+
+    CustomPopoverProductoComponent,
 
     CustomStatusIndicatorComponent,
 
@@ -71,15 +90,25 @@ import { CustomStatusIndicatorComponent } from './components/custom-status-indic
     ReactiveFormsModule,
   ],
   exports: [
+    CustomAddSucursalComponent,
+    CustomAddAlmacenComponent,
+
     CustomAlertInput1Component,
 
     CustomButton1Component,
     CustomButton2Component,
 
+    CustomCardAlmacenComponent,
+    CustomCardSucursalComponent,
+
+    CustomCodeComponent,
+
     CustomConnectionStatusComponent,
 
     CustomDropDownComponent,
     CustomDropDownDarkComponent,
+
+    CustomIconComponent,
 
     CustomInput1Component,
     CustomInput1DarkComponent,
@@ -89,6 +118,8 @@ import { CustomStatusIndicatorComponent } from './components/custom-status-indic
     CustomMenuButtonComponent,
 
     CustomMyLoadingComponent,
+
+    CustomPopoverProductoComponent,
 
     CustomStatusIndicatorComponent,
 

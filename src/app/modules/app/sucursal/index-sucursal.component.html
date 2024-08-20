@@ -1,0 +1,77 @@
+<div class="relative w-full h-full bg-color-white shadow-lg rounded p-4 overflow-auto gap-4 -z-0">
+
+    <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+    <app-custom-add-sucursal *ngIf="showAddSucursal" [type]="sucursalAddType" [id_sucursal]="id_sucursal"
+        (response)="sucursalAddResponse($event)"></app-custom-add-sucursal>
+
+    <app-custom-add-almacen *ngIf="showAddAlmacen" [type]="almacenAddType" [id_sucursal]="id_sucursal"
+        [id_almacen]="id_almacen" (response)="almacenAddResponse($event)"></app-custom-add-almacen>
+
+    <div *ngIf="!isLoading" class="flex flex-col xl:grid xl:grid-cols-3 gap-4 w-full h-full">
+        <div class="flex xl:flex-col gap-4 w-full h-max xl:h-full overflow-auto p-2">
+            <app-custom-button-2 class="w-full" [id]="'id_button_agregar_sucursal'" [label]="'Agregar Sucursal'"
+                [type]="'accept'" [icon]="'fa-solid fa-plus fa-lg'"
+                [class]="'w-full shadow-md transform hover:translate-y-[-2px] hover:shadow-lg transition-all duration-300'"
+                [valid]="true" (click)="onClickAgregarSucursal()">
+            </app-custom-button-2>
+
+            <ng-container *ngFor="let item of dataSucursal; let i = index">
+                <app-custom-card-sucursal #sucursalCard [sucursal]="item" [index]="i" [class]="''"
+                    [id_selected]="id_sucursal" (response)="sucursalCardResponse($event, i)">
+                </app-custom-card-sucursal>
+            </ng-container>
+        </div>
+        <!-- Table y Nav -->
+        <div class="overflow-auto shadow-md border rounded-lg grow col-span-2">
+            <table
+                class="w-max md:w-full text-sm text-center rtl:text-right text-primary-500 table-fixed md:table-auto">
+                <thead class="text-sm text-primary-800 uppercase bg-primary-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">#</th>
+
+                        <th scope="col" class="px-6 py-3">Nombre</th>
+
+                        <th scope="col" class="px-6 py-3">Dirección</th>
+
+                        <th scope="col" class="px-6 py-3">Teléfono</th>
+
+                        <th scope="col" class="px-6 py-3">Encargado</th>
+
+                        <th scope="col" class="px-6 py-3">Estado</th>
+
+                        <th scope="col" class="px-6 py-3">
+
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="text-primary-800 border-b " *ngFor="let item of dataAlmacen; index as i"
+                        [ngClass]="i % 2 === 0 ? 'bg-color-white' : 'bg-primary-50'">
+                        <td class="px-2 py-2">{{ i + 1 }}</td>
+
+                        <td class="px-2 py-2">{{ item.nombre }}</td>
+
+                        <td class="px-2 py-2">{{ item.direccion }}</td>
+
+                        <td class="px-2 py-2">{{ item.telefono }}</td>
+
+                        <td class="px-2 py-2">{{ item.encargado.nombres + ' ' +item.encargado.apellidos }}</td>
+
+                        <td class="px-2 py-2">
+                            <app-custom-status-indicator [status]="item.estado"></app-custom-status-indicator>
+                        </td>
+
+                        <td class="flex gap-4 px-2 py-2 z-10">
+                            <a class="underline underline-offset-1 cursor-pointer" (click)="onClickActulizarAlmacen(i)">
+                                Actualizar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

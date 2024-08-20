@@ -14,10 +14,12 @@ const routes: Routes = [
 
       { path: 'almacen', loadChildren: () => import('./../app/almacen/almacen.module').then(m => m.AlmacenModule) },
       { path: 'sucursal', loadChildren: () => import('./../app/sucursal/sucursal.module').then(m => m.SucursalModule) },
-      { path: 'stock/general', loadChildren: () => import('./../app/stock-module/stock-general/stock-general.module').then(m => m.StockGeneralModule) },
-      { path: 'stock/sucursal', loadChildren: () => import('./../app/stock-module/stock-sucursal/stock-sucursal.module').then(m => m.StockSucursalModule) },
+
+      { path: 'stock', loadChildren: () => import('./../app/stock-module/stock.module').then(m => m.StockModule) },
 
       { path: 'usuario', loadChildren: () => import('./../app/usuario/usuario.module').then(m => m.UsuarioModule) },
+
+      { path: 'mantenimiento', loadChildren: () => import('./../mantenimiento/mantenimiento.module').then(m => m.MantenimientoModule) },
     ]
   },
 

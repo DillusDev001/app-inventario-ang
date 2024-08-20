@@ -1,4 +1,4 @@
-export interface Response {
+export interface ResponseEmitter {
     bool: boolean;
     data: any;
 }

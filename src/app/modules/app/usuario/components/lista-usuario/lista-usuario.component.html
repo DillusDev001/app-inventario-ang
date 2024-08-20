@@ -1,8 +1,8 @@
-<div class="relative w-full h-full overflow-auto bg-color-white rounded-lg">
+<div class="relative w-full h-full items-center shadow-lg overflow-auto pt-4 gap-4 bg-color-white p-4">
+
     <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
 
-    <div *ngIf="!isLoading"
-        class="flex flex-col w-full h-full shadow-lg overflow-auto rounded-lg p-4 gap-4 bg-color-white">
+    <div class="flex flex-col gap-4 w-full h-full">
         <!-- Botones Busqueda -->
         <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
             <!-- Botones y buscador -->
@@ -19,80 +19,93 @@
                             [control]="formBusqueda.controls.value" [icon]="''">
                         </app-custom-input-2>
 
-                        <app-custom-button-2 class="w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
-                            [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="'w-full'"
-                            [valid]="formBusqueda.valid" (click)="onClickBusqueda()">
-                        </app-custom-button-2>
+                        <div class="flex gap-2 justify-center">
+                            <app-custom-button-2 class="w-full h-12" [id]="'id_button_busqueda'"
+                                [label]="'Buscar'" [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'"
+                                [class]="''" [valid]="formBusqueda.valid && isOnline" (click)="onClickBusqueda()">
+                            </app-custom-button-2>
 
+                            <app-custom-button-2 class="w-full h-12" [id]="'id_button_limpiar'"
+                                [label]="'Limpiar'" [type]="'cancel'" [icon]="'fa-solid fa-broom fa-lg'"
+                                [class]="''" [valid]="isOnline" (click)="onClicklimpiar()">
+                            </app-custom-button-2>
+                        </div>
                     </form>
                 </div>
             </div>
 
         </div>
 
-        <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full">
-            <!-- Table y Nav -->
-            <div class="overflow-auto shadow-md border rounded-lg grow">
-                <table
-                    class="w-max md:w-full text-sm text-center rtl:text-right text-primary-500 table-fixed md:table-auto">
-                    <thead class="text-sm text-primary-800 uppercase bg-primary-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">#</th>
+        <!-- Table y Nav -->
+        <div *ngIf="!isLoading" class="overflow-auto shadow-md border rounded-lg grow">
+            <table
+                class="w-max md:w-full text-sm text-center rtl:text-right text-primary-500 table-fixed md:table-auto">
+                <thead class="text-sm text-primary-800 uppercase bg-primary-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">#</th>
 
-                            <th scope="col" class="px-6 py-3">Usuario</th>
+                        <th scope="col" class="px-6 py-3">Usuario</th>
 
-                            <th scope="col" class="px-6 py-3">Nombres</th>
+                        <th scope="col" class="px-6 py-3">Nombres</th>
 
-                            <th scope="col" class="px-6 py-3">Apellidos</th>
+                        <th scope="col" class="px-6 py-3">Apellidos</th>
 
-                            <th scope="col" class="px-6 py-3">Celular</th>
+                        <th scope="col" class="px-6 py-3">Celular</th>
 
-                            <th scope="col" class="px-6 py-3">Rol</th>
+                        <th scope="col" class="px-6 py-3">Rol</th>
 
-                            <th scope="col" class="px-6 py-3">Sexo</th>
+                        <th scope="col" class="px-6 py-3">Sexo</th>
 
-                            <th scope="col" class="px-6 py-3">Estado</th>
+                        <th scope="col" class="px-6 py-3">Estado</th>
 
-                            <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3">
 
-                            </th>
-                        </tr>
-                    </thead>
+                        </th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        <tr class="text-primary-800 bg-white border-b hover:bg-primary-50"
-                            *ngFor="let item of dataUsuarios; index as i">
-                            <td class="px-2 py-2">{{ i + 1 }}</td>
+                <tbody>
+                    <tr class="text-primary-800 bg-white border-b hover:bg-primary-50"
+                        *ngFor="let item of dataUsuarios; index as i">
+                        <td class="px-2 py-2">{{ i + 1 }}</td>
 
-                            <td class="px-2 py-2">{{ item.usuario }}</td>
+                        <td class="px-2 py-2">{{ item.usuario }}</td>
 
-                            <td class="px-2 py-2">{{ item.nombres }}</td>
+                        <td class="px-2 py-2">{{ item.nombres }}</td>
 
-                            <td class="px-2 py-2">{{ item.apellidos }}</td>
+                        <td class="px-2 py-2">{{ item.apellidos }}</td>
 
-                            <td class="px-2 py-2">{{ item.celular }}</td>
+                        <td class="px-2 py-2">{{ item.celular }}</td>
 
-                            <td class="px-2 py-2">{{ item.rol }}</td>
+                        <td class="px-2 py-2">{{ item.rol }}</td>
 
-                            <td class="px-2 py-2">{{ item.sexo }}</td>
+                        <td class="px-2 py-2">{{ item.sexo }}</td>
 
-                            <td class="px-2 py-2">
-                                <app-custom-status-indicator [status]="item.estado"></app-custom-status-indicator>
-                            </td>
+                        <td class="px-2 py-2">
+                            <app-custom-status-indicator [status]="item.estado"></app-custom-status-indicator>
+                        </td>
 
-                            <td class="px-2 py-2">
-                                <p class="underline underline-offset-1 cursor-pointer" (click)="onClickActulizar(i)">
-                                    Actualizar</p>
-                            </td>
-                        </tr>
-                    </tbody>
+                        <td class="flex gap-4 px-2 py-2 z-10">
+                            <a class="underline underline-offset-1 cursor-pointer" (click)="onClickVer(i)">
+                                Ver
+                            </a>
+                            <a class="underline underline-offset-1 cursor-pointer" (click)="onClickActulizar(i)">
+                                Actualizar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
 
-                </table>
-            </div>
+            </table>
         </div>
+
+
+
     </div>
 
-    <app-agregar-usuario *ngIf="!isLoading && showUsuarioAlert"
-    [title]="'Hola mundo'"></app-agregar-usuario>
-    
+
+    <app-agregar-usuario *ngIf="!isLoading && showUsuarioAlert" [type]="typeUsuarioAlert" [title]="titleUsuarioAlert"
+        [usuario]="UsuarioAlert" (response)="onReciveResponseUsuarioAlert($event)">
+    </app-agregar-usuario>
+
 </div>

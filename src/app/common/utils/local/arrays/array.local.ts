@@ -1,13 +1,7 @@
-
-
-
-
 export const arrayArea = [
     { value: 'LAB', data: 'Laboratorio' },
     { value: 'ADM', data: 'Administración' }
 ]
-
-
 
 export const arrayUnidadMedida = [
     { value: 'Capacitación', data: 'Capacitación' },
@@ -16,8 +10,6 @@ export const arrayUnidadMedida = [
     { value: 'Pago', data: 'Pago' },
     { value: 'Servicio', data: 'Servicio' },
 ]
-
-
 
 export const arrayIcon = [
     { name: '', value: '' },
@@ -31,8 +23,6 @@ export const arrayIcon = [
     { name: '', value: '' },
 
 ]
-
-
 
 export const arrayPais = [
     {

@@ -1171,3 +1171,25 @@ export const arraySexo = [
         data: 'Masculino'
     },
 ]
+
+export const arrayGeneroPrenda = [
+    {
+        value: 'Varón',
+        data: 'Varón'
+    },
+    {
+        value: 'Dama',
+        data: 'Dama'
+    },
+]
+
+export const arrayTipoPrenda = [
+    {
+        data: 'Prenda',
+        value: 'Prenda',
+    },
+    {
+        data: 'Accesorio',
+        value: 'Accesorio',
+    }
+]

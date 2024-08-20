@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { ApiResult } from 'src/app/common/interfaces/api/api.result';
+import { ResponseEmitter } from 'src/app/common/interfaces/emitter/response.emitter';
 import { DataLocalStorage } from 'src/app/common/interfaces/local/data-local-storage';
 import { goLogin } from 'src/app/common/router/auth.route';
 import { NetworkStatusService } from 'src/app/common/services/network-status.service';
@@ -69,7 +70,9 @@ export class ListaUsuarioComponent implements OnInit {
   isLoading: boolean = false;
 
   showUsuarioAlert: boolean = false;
-  tilteUsuarioAlert: string = '';
+  typeUsuarioAlert: string = '';
+  titleUsuarioAlert: string = '';
+  UsuarioAlert: string = '';
 
   // Mensaje Alert
   msgAlert: string = '';
@@ -90,16 +93,50 @@ export class ListaUsuarioComponent implements OnInit {
 
   /** ------------------------------------ Methods onClick ------------------------------------ **/
   onClickBusqueda() {
-    if(this.formBusqueda.valid){
-      this.isLoading = true;
-      const attribute = String(this.formBusqueda.value.busqueda);
-      const value = String(this.formBusqueda.value.value);
-      console.log(attribute, value);
-      this.getBusquedaAttribute(attribute, value);
+    if (this.formBusqueda.valid) {
+      if (this.isOnline) {
+        this.isLoading = true;
+        const attribute = String(this.formBusqueda.value.busqueda);
+        const value = String(this.formBusqueda.value.value);
+        this.getBusquedaAttribute(attribute, value);
+      } else {
+        this.customErrorToast('No hay conexión a internet!!!')
+      }
     }
   }
 
-  onClickActulizar(index: number) { }
+  onClicklimpiar() {
+    if (this.isOnline) {
+      this.isLoading = true;
+      this.formBusqueda.controls.busqueda.setValue('');
+      this.formBusqueda.controls.value.setValue('');
+      this.getListaUsuarios();
+    } else {
+      this.customErrorToast('No hay conexión a internet!!!')
+    }
+  }
+
+  onClickVer(index: number) {
+    if (this.isOnline) {
+      this.typeUsuarioAlert = 'ver';
+      this.titleUsuarioAlert = 'Usuario';
+      this.UsuarioAlert = this.dataUsuarios[index].usuario;
+      this.showUsuarioAlert = true;
+    } else {
+      this.customErrorToast('No hay conexión a internet!!!')
+    }
+  }
+
+  onClickActulizar(index: number) {
+    if (this.isOnline) {
+      this.typeUsuarioAlert = 'editar';
+      this.titleUsuarioAlert = 'Actualizar Usuario';
+      this.UsuarioAlert = this.dataUsuarios[index].usuario;
+      this.showUsuarioAlert = true;
+    } else {
+      this.customErrorToast('No hay conexión a internet!!!')
+    }
+  }
 
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
   getListaUsuarios() {
@@ -117,10 +154,10 @@ export class ListaUsuarioComponent implements OnInit {
     });
   }
 
-  getBusquedaAttribute(attribute: string, value: string){
+  getBusquedaAttribute(attribute: string, value: string) {
     this.dataUsuarios = [];
 
-    this.usuarioService.usuarioAttribute(attribute, value).subscribe(result => {
+    this.usuarioService.usuarioBusqueda(attribute, value).subscribe(result => {
       result as ApiResult;
 
       if (result.boolean) {
@@ -135,11 +172,25 @@ export class ListaUsuarioComponent implements OnInit {
   /** ---------------------------------- Onclick file import ---------------------------------- **/
 
   /** ---------------------------------------- Receiver --------------------------------------- **/
+  onReciveResponseUsuarioAlert(event: ResponseEmitter) {
+    if (event.bool) {
+      this.showUsuarioAlert = false;
+      this.isLoading = true;
+      if (this.formBusqueda.valid) {
+        this.onClickBusqueda();
+      } else {
+        this.getListaUsuarios();
+      }
+    } else {
+      this.showUsuarioAlert = false;
+    }
+  }
 
   /** --------------------------------------- ShowAlerts -------------------------------------- **/
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -155,6 +206,7 @@ export class ListaUsuarioComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -170,6 +222,7 @@ export class ListaUsuarioComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
+      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',
