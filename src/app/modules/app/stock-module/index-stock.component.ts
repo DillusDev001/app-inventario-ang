@@ -72,7 +72,7 @@ export class IndexStockComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  tabSelected: string='General';
+  tabSelected: string = 'General';
 
 
 
@@ -80,12 +80,35 @@ export class IndexStockComponent implements OnInit {
 
   /** ------------------------------------ Methods onClick ------------------------------------ **/
   onClickTab(val: string) {
-    this.tabSelected = val;
-    console.log(val);
-    switch(val) {
-      case 'General': goStockGeneral(this.router); break;
+    switch (val) {
+      case 'General':
+        if (this.isOnline) {
+          if (val !== this.tabSelected) {
+            this.tabSelected = val;
+            goStockGeneral(this.router);
+          } else {
+            //console.log('otra vez sucursal');
+          }
+        } else {
+          this.msgAlert = 'No hay conexión a Internet.';
+          this.customErrorToast(this.msgAlert);
+        }
 
-      case 'Sucursal': goStockSucursal(this.router); break;
+        break;
+
+      case 'Sucursal':
+        if (this.isOnline) {
+          if (val !== this.tabSelected) {
+            this.tabSelected = val;
+            goStockSucursal(this.router);
+          } else {
+            //console.log('otra vez sucursal');
+          }
+        } else {
+          this.msgAlert = 'No hay conexión a Internet.';
+          this.customErrorToast(this.msgAlert);
+        }
+        break;
     }
   }
 

@@ -1,0 +1,183 @@
+<div class="flex flex-col w-full h-full shadow-lg overflow-auto pt-4 gap-4 bg-color-white p-4">
+
+    <app-custom-alert-confirmation *ngIf="showConfirmation" (response)="onReciveResponseConfirmation($event)"
+        [msgAlert]="'¿Agregar compra?'" [strBtn1]="'Sí, agregar'"
+        [strBtn2]="'Cancelar'"></app-custom-alert-confirmation>
+
+    <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+    <div *ngIf="!isLoading" class="flex flex-col p-4 md:p-5 text-center gap-4">
+
+        <app-custom-title [id]="'id_title_usuario'" [label]="title"
+            [class]="'w-full text-center uppercase text-primary-500'">
+        </app-custom-title>
+
+        <form class="flex flex-col gap-4 h-max overflow-auto">
+
+            <div class="flex gap-4 w-max">
+                <app-custom-input-2 [id]="'id_input_talonario'" [label]="'Talonario'" [type]="'text'"
+                    [autocomplete]="''" [class]="'bg-info-50 overflow-hidden'"
+                    [control]="formCompra.controls.talonario_proforma" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+                </app-custom-input-2>
+
+                <input type="text" (change)="agregarArticulo($event)" placeholder="Escanea el código aquí" />
+
+                <zxing-scanner (scanSuccess)="handleQrCodeResult($event)" (camerasFound)="hasDevices = true"
+                    (camerasNotFound)="hasDevices = false" (permissionResponse)="hasPermission = $event">
+                </zxing-scanner>
+
+                <div *ngIf="scannedResult">
+                    <p>Scanned Result: {{ scannedResult }}</p>
+                </div>
+
+                <!--
+                <app-custom-input-2 [id]="'id_input_talonario'" [label]="'Talonario'" [type]="'text'"
+                    [autocomplete]="''" [class]="'bg-info-50 overflow-hidden'"
+                    [control]="formCompra.controls.talonario_proforma" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+                </app-custom-input-2>
+
+                <app-custom-input-2 [id]="'id_input_nro_proforma'" [label]="'Proforma'" [type]="'text'"
+                    [autocomplete]="''" [class]="'bg-info-50 overflow-hidden'"
+                    [control]="formCompra.controls.nro_proforma" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+                </app-custom-input-2>
+
+                <app-custom-input-2 [id]="'id_input_fec_venta'" [label]="'Fecha Venta'" [type]="'date'"
+                    [autocomplete]="''" [class]="'bg-info-50 overflow-hidden'" [control]="formCompra.controls.fec_venta"
+                    [icon]="'fa-solid fa-dollar-sign fa-lg'">
+                </app-custom-input-2>
+
+                <app-custom-input-2 [id]="'id_input_nro_factura'" [label]="'Factura'" [type]="'text'"
+                    [autocomplete]="''" [class]="'bg-info-50 overflow-hidden'"
+                    [control]="formCompra.controls.nro_factura" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+                </app-custom-input-2>
+                -->
+            </div>
+
+            <!-- Table -->
+            <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full overflow-auto">
+                <!-- Table y Nav -->
+                <div class="h-full overflow-auto shadow-md border rounded-lg grow">
+                    <table
+                        class="w-max md:w-full h-full text-sm text-left rtl:text-right text-primary-900 table-fixed md:table-auto">
+                        <thead class="text-sm text-primary-800 uppercase bg-primary-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">#</th>
+
+                                <th scope="col" class="px-6 py-3">Código Producto</th>
+
+                                <th scope="col" class="px-6 py-3">Cantidad</th>
+
+                                <th scope="col" class="px-6 py-3">Descripción</th>
+
+                                <th scope="col" class="px-6 py-3">Precio Unitario</th>
+
+                                <th scope="col" class="px-6 py-3">Subtotal</th>
+
+                                <th scope="col" class="px-6 py-3"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th scope="col" class="px-6 py-3">1</th>
+                                <th scope="col" class="px-6 py-3">P25005-11111</th>
+                                <th scope="col" class="px-6 py-3">4</th>
+                                <th scope="col" class="px-6 py-3">Pantalón - L - Negro</th>
+                                <th scope="col" class="px-6 py-3">Bs. 120</th>
+                                <th scope="col" class="px-6 py-3">Bs. 480</th>
+                                <th scope="col" class="px-6 py-3"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="px-6 py-3">2</th>
+                                <th scope="col" class="px-6 py-3">P25005-11111</th>
+                                <th scope="col" class="px-6 py-3">4</th>
+                                <th scope="col" class="px-6 py-3">Blaser - L - Negro</th>
+                                <th scope="col" class="px-6 py-3">Bs. 120</th>
+                                <th scope="col" class="px-6 py-3">Bs. 480</th>
+                                <th scope="col" class="px-6 py-3"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="px-6 py-3">1</th>
+                                <th scope="col" class="px-6 py-3">P25001-11111</th>
+                                <th scope="col" class="px-6 py-3">4</th>
+                                <th scope="col" class="px-6 py-3">Pantalón - L - Negro</th>
+                                <th scope="col" class="px-6 py-3">Bs. 120</th>
+                                <th scope="col" class="px-6 py-3">Bs. 480</th>
+                                <th scope="col" class="px-6 py-3"></th>
+                            </tr>
+                            <!--
+                            <ng-container *ngFor="let item of dataVenta; index as i">
+                                <tr *ngIf="item.producto.estado === 1 || (item.producto.estado === 0 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador'))"
+                                    [ngClass]="{'text-red-800': item.producto.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
+                                    class="text-primary-800 bg-white border-b">
+                                    <th scope="col" class="px-6 py-3">{{ i + 1 }}</th>
+
+                                    <th scope="col" class="px-6 py-3">{{ item.cod_producto }}</th>
+
+                                    <th scope="col" class="px-6 py-3">
+                                        {{ item.producto.categoria + ' - ' + item.producto.talla + ' - ' + item.producto.color}}
+                                    </th>
+
+                                    <th scope="col" class="px-6 py-3">{{ item.producto.precio_unitario | currency:'BOB':'Bs. '}}
+                                    </th>
+
+                                    <th scope="col" class="px-6 py-3">{{ item.producto.precio_mayor | currency:'BOB':'Bs. '}}
+                                    </th>
+
+                                    <th scope="col" class="px-6 py-3">{{ item.cantidad }}</th>
+
+                                    <td class="px-2 py-2 flex gap-4">
+                                        <p class="underline underline-offset-1 cursor-pointer text-info-700"
+                                            (click)="onClickItemTable('editar', i)">Actualizar</p>
+                                        <p *ngIf="item.producto.estado === 1"
+                                            class="underline underline-offset-1 cursor-pointer text-red-700"
+                                            (click)="onClickEliminar(i)">Eliminar</p>
+                                        <p *ngIf="item.producto.estado === 0"
+                                            class="underline underline-offset-1 cursor-pointer text-info-700"
+                                            (click)="onClickHabilitar(i)">Habilitar</p>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        -->
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+
+            <app-custom-input-2 [id]="'id_input_costo_total'" [label]="'Costo Total'" [type]="'text'"
+                [autocomplete]="''" [class]="'bg-info-50 overflow-hidden w-max'"
+                [control]="formCompra.controls.costo_total" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+            </app-custom-input-2>
+
+            <app-custom-input-2 [id]="'id_input_descuento'" [label]="'Descuento'" [type]="'text'" [autocomplete]="''"
+                [class]="'bg-info-50 overflow-hidden w-max'" [control]="formCompra.controls.descuento"
+                [icon]="'fa-solid fa-dollar-sign fa-lg'">
+            </app-custom-input-2>
+
+            <app-custom-input-2 [id]="'id_input_costo_pagar'" [label]="'Costo Pagar'" [type]="'text'"
+                [autocomplete]="''" [class]="'bg-info-50 overflow-hidden w-max'"
+                [control]="formCompra.controls.costo_pagar" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+            </app-custom-input-2>
+
+            <app-custom-input-2 [id]="'id_input_user_venta'" [label]="'Usuarioventa'" [type]="'text'"
+                [autocomplete]="''" [class]="'bg-info-50 overflow-hidden w-max'"
+                [control]="formCompra.controls.user_venta" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+            </app-custom-input-2>
+
+        </form>
+
+        <div class="flex flex-col gap-4 lg:grid lg:grid-cols-2 w-full overflow-auto">
+            <app-custom-button-2 *ngIf="type !== 'ver'" class="w-full" [id]="'id_button_aceptar'" [label]="'Guardar'"
+                [type]="'accept'" [icon]="''" [class]="'w-full'" [valid]="formCompra.valid && isOnline"
+                (click)="onClickAceptar()">
+            </app-custom-button-2>
+
+            <app-custom-button-1 class="w-full" [id]="'id_button_cancelar'" [label]="'Cancelar'" [type]="'cancel'"
+                [icon]="''" [class]="'w-full'" [valid]="true" (click)="onClickCancelar()">
+            </app-custom-button-1>
+        </div>
+    </div>
+
+</div>

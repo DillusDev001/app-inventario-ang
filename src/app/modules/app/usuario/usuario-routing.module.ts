@@ -5,11 +5,7 @@ import { ListaUsuarioComponent } from './components/lista-usuario/lista-usuario.
 import { AgregarUsuarioComponent } from './components/agregar-usuario/agregar-usuario.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'lista', pathMatch: 'full' },
-  {
-    path: 'lista',
-    component: ListaUsuarioComponent
-  },
+  { path: '', component: ListaUsuarioComponent },
 ];
 
 @NgModule({

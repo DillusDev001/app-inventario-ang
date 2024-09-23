@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -12,6 +12,14 @@ export class CustomDropDownDarkComponent {
   @Input() control!: FormControl;
   @Input() class!: string;
   @Input() data!: any[];
+
+  @Output() valueChanged = new EventEmitter<any>();
+
+  ngOnInit() {
+    this.control.valueChanges.subscribe(value => {
+      this.valueChanged.emit(value); // Emitir el nuevo valor al componente padre
+    });
+  }
 
   classSet: string = 'border-color-unfocus text-color-unfocus';
 

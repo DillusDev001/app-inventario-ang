@@ -138,6 +138,16 @@ export class ListaUsuarioComponent implements OnInit {
     }
   }
 
+  onClickHabilitar(index: number) {
+    this.isLoading = true;
+    this.estadoUsuario(this.dataUsuarios[index].usuario, 1);
+  }
+
+  onClickEliminar(index: number) {
+    this.isLoading = true;
+    this.estadoUsuario(this.dataUsuarios[index].usuario, 0);
+  }
+
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
   getListaUsuarios() {
     this.dataUsuarios = [];
@@ -166,6 +176,25 @@ export class ListaUsuarioComponent implements OnInit {
         this.customErrorToast(result.message);
       }
       this.isLoading = false;
+    });
+  }
+
+  estadoUsuario(usuario: string, estado: number) {
+    const data = {
+      estado: estado
+    }
+
+    this.usuarioService.usuarioActualizar(usuario, data).subscribe(result => {
+      result as ApiResult;
+
+      if (result.boolean) {
+        this.msgAlert = estado === 1 ? 'Se ha habilitado correctamente.' : 'Se ha eliminado correctamente.';
+        this.customSuccessToast(this.msgAlert);
+        this.getListaUsuarios();
+      } else {
+        this.customErrorToast(result.message);
+        this.isLoading = false;
+      }
     });
   }
 

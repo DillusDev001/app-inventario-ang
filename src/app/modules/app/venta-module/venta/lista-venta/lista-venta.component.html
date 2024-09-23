@@ -1,0 +1,113 @@
+<app-add-venta *ngIf="showVenta" [venta]="ventaSelected" [type]="ventaType"></app-add-venta>
+
+<div *ngIf="!showVenta" class="relative flex flex-col justify-center w-full h-full shadow-lg overflow-auto pt-4 gap-4 bg-color-white p-4">
+
+    <app-custom-alert-confirmation *ngIf="showConfirmation" (response)="onReciveResponseConfirmation($event)"
+        [msgAlert]="'¿Agregar artículos faltantes?'" [strBtn1]="'Sí, agregar'"
+        [strBtn2]="'Cancelar'"></app-custom-alert-confirmation>
+
+    <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+    <!-- Botones Busqueda -->
+    <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
+        <!-- Botones y buscador -->
+        <div class="flex flex-col md:flex-row gap-2 h-max border rounded-lg border-color-text p-2  md:divide-x">
+            <div class="flex flex-grow w-full">
+                <form [formGroup]="formBusqueda" class="flex flex-col md:flex-row gap-2 w-full overflow-auto">
+                    <app-custom-drop-down class="h-12 w-full md:w-max md:h-full" [id]="'id_pregunta'"
+                        [label]="'Búsqueda...'" [control]="formBusqueda.controls.busqueda" [class]="''"
+                        [data]="dataBusquedaProducto">
+                    </app-custom-drop-down>
+
+                    <app-custom-input-2 class="h-12 w-full md:w-max md:h-full md:flex-grow" [id]="'id_busqueda_value'"
+                        [label]="'Búsqueda...'" [type]="'text'" [autocomplete]="''" [class]="''"
+                        [control]="formBusqueda.controls.value" [icon]="''">
+                    </app-custom-input-2>
+
+                    <app-custom-button-2 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="''"
+                        [valid]="formBusqueda.valid" (click)="onClickBusqueda()">
+                    </app-custom-button-2>
+
+                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_limpiar'" [label]="'Limpiar'"
+                        [type]="'cancel'" [icon]="'fa-solid fa-broom fa-lg'" [class]="''" [valid]="true"
+                        (click)="onClickLimpiar()">
+                    </app-custom-button-1>
+
+                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_agregar'" [label]="'Agregar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-broom fa-lg'" [class]="''" [valid]="true"
+                        (click)="onClickAgregar()">
+                    </app-custom-button-1>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Table -->
+    <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full overflow-auto">
+        <!-- Table y Nav -->
+        <div class="overflow-auto shadow-md border rounded-lg grow">
+            <table class="w-max md:w-full text-sm text-left rtl:text-right text-primary-900 table-fixed md:table-auto">
+                <thead class="text-sm text-primary-800 uppercase bg-primary-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">#</th>
+
+                        <th scope="col" class="px-6 py-3">Código Producto</th>
+
+                        <th scope="col" class="px-6 py-3">Descripción</th>
+
+                        <th scope="col" class="px-6 py-3">Precio Unitario</th>
+
+                        <th scope="col" class="px-6 py-3">Precio Mayor</th>
+
+                        <th scope="col" class="px-6 py-3">Cantidad</th>
+
+                        <th scope="col" class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <!--
+                    <ng-container *ngFor="let item of dataVenta; index as i">
+                        <tr *ngIf="item.producto.estado === 1 || (item.producto.estado === 0 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador'))"
+                            [ngClass]="{'text-red-800': item.producto.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
+                            class="text-primary-800 bg-white border-b">
+                            <th scope="col" class="px-6 py-3">{{ i + 1 }}</th>
+
+                            <th scope="col" class="px-6 py-3">{{ item.cod_producto }}</th>
+
+                            <th scope="col" class="px-6 py-3">
+                                {{ item.producto.categoria + ' - ' + item.producto.talla + ' - ' + item.producto.color}}
+                            </th>
+
+                            <th scope="col" class="px-6 py-3">{{ item.producto.precio_unitario | currency:'BOB':'Bs. '}}
+                            </th>
+
+                            <th scope="col" class="px-6 py-3">{{ item.producto.precio_mayor | currency:'BOB':'Bs. '}}
+                            </th>
+
+                            <th scope="col" class="px-6 py-3">{{ item.cantidad }}</th>
+
+                            <td class="px-2 py-2 flex gap-4">
+                                <p class="underline underline-offset-1 cursor-pointer text-info-700"
+                                    (click)="onClickItemTable('editar', i)">Actualizar</p>
+                                <p *ngIf="item.producto.estado === 1"
+                                    class="underline underline-offset-1 cursor-pointer text-red-700"
+                                    (click)="onClickEliminar(i)">Eliminar</p>
+                                <p *ngIf="item.producto.estado === 0"
+                                    class="underline underline-offset-1 cursor-pointer text-info-700"
+                                    (click)="onClickHabilitar(i)">Habilitar</p>
+                            </td>
+                        </tr>
+                    </ng-container>
+                -->
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>

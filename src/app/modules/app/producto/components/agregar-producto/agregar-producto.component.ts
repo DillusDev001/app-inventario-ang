@@ -76,6 +76,7 @@ export class AgregarProductoComponent implements OnInit {
         this.formProducto.controls.talla.disable();
         this.formProducto.controls.color.disable();
         this.formProducto.controls.material.disable();
+
         this.getProducto();
         break;
 
@@ -116,8 +117,8 @@ export class AgregarProductoComponent implements OnInit {
     material: new FormControl('', [Validators.required]),
     sexo: new FormControl('', [Validators.required]),
     descripcion: new FormControl('', []),
-    precio_unitario: new FormControl('', [Validators.required, numberValidator]),
-    precio_mayor: new FormControl('', [Validators.required, numberValidator])
+    precio_unitario: new FormControl('', [Validators.required, numberValidator()]),
+    precio_mayor: new FormControl('', [Validators.required, numberValidator()])
   });
 
   @Input() type: string = ''; // ver - editar
@@ -137,15 +138,18 @@ export class AgregarProductoComponent implements OnInit {
 
   dataGeneroPrenda = arrayGeneroPrenda;
 
+
+  hexaColor: string = '#';
+
   /** ---------------------------------------- Methods ---------------------------------------- **/
   generarCodigoProducto(): String {
     let codigo = '';
 
     codigo = String(this.formProducto.value.codigo) + '-' +
-      inicialesCapital(String(this.formProducto.value.tipo)) + '-' +
-      this.getIDCategoria(String(this.formProducto.value.categoria)) + '-' +
-      this.getIDTalla(String(this.formProducto.value.talla)) + '-' +
-      this.getIDColor(String(this.formProducto.value.color)) + '-' +
+      inicialesCapital(String(this.formProducto.value.tipo)) +
+      this.getIDCategoria(String(this.formProducto.value.categoria)) +
+      this.getIDTalla(String(this.formProducto.value.talla)) +
+      this.getIDColor(String(this.formProducto.value.color)) +
       this.getIDMaterial(String(this.formProducto.value.material));
 
     return codigo;
@@ -178,6 +182,15 @@ export class AgregarProductoComponent implements OnInit {
     return 0;
   }
 
+  getHexaColor(color: string): string {
+    for (let i = 0; i < this.dataColor.length; i++) {
+      if (color === this.dataColor[i]['data']) {
+        return this.dataColor[i]['hexa'];
+      }
+    }
+    return '';
+  }
+
   getIDMaterial(material: string): number {
     for (let i = 0; i < this.dataMaterial.length; i++) {
       if (material === this.dataMaterial[i]['data']) {
@@ -194,13 +207,13 @@ export class AgregarProductoComponent implements OnInit {
         this.isLoading = true;
 
         // generar codigo
-        
+
 
         let data = {};
 
         switch (this.type) {
           case 'agregar':
-            const cod_producto  = this.generarCodigoProducto();
+            const cod_producto = this.generarCodigoProducto();
             data = {
               cod_producto: cod_producto,
               cod_hash: '',
@@ -233,7 +246,7 @@ export class AgregarProductoComponent implements OnInit {
         this.customErrorToast('No hay conexión a internet!!!')
       }
     } else {
-      
+
     }
   }
 
@@ -331,6 +344,7 @@ export class AgregarProductoComponent implements OnInit {
           this.dataColor.push({
             value: item.color,
             data: item.color,
+            hexa: item.hexadecimal,
             id: item.id_color
           })
         });
@@ -357,6 +371,11 @@ export class AgregarProductoComponent implements OnInit {
             id: item.id_material
           })
         });
+
+        if (this.type !== 'agregar') {
+          this.hexaColor = this.getHexaColor(this.producto.color);
+          console.log('hexa: ', this.hexaColor)
+        }
         this.isLoading = false;
       } else {
         this.customErrorToast(result.message);
@@ -412,6 +431,17 @@ export class AgregarProductoComponent implements OnInit {
   /** ---------------------------------- Onclick file import ---------------------------------- **/
 
   /** ---------------------------------------- Receiver --------------------------------------- **/
+  onDropdownValueChangeSucursal(value: any) {
+    if (value !== undefined) {
+      if (value['hexa'] !== '#') {
+        this.hexaColor = value['hexa'];
+      } else {
+        this.hexaColor = '#FFFFFF';
+      }
+    } else {
+      this.hexaColor = '#FFFFFF';
+    }
+  }
 
   /** --------------------------------------- ShowAlerts -------------------------------------- **/
   customSuccessToast(msg: string) {

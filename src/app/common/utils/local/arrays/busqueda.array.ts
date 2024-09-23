@@ -55,3 +55,39 @@ export const arrayBusquedaProducto = [
         value: 'precio_mayor'
     },
 ]
+
+export const arrayBusquedaStockGeneral = [
+    {
+        data: 'Cod Producto',
+        value: 'cod_producto'
+    }
+]
+
+export const arrayBusquedaVenta = [
+    {
+        data: 'Fecha',
+        value: 'fec_venta'
+    }
+]
+
+export const arrayBusquedaCliente = [
+    {
+        data: 'Cliente',
+        value: 'cliente'
+    },
+
+    {
+        data: 'Razón',
+        value: 'razon'
+    },
+
+    {
+        data: 'NIT',
+        value: 'nit'
+    },
+
+    {
+        data: 'Celular',
+        value: 'celular'
+    }
+]

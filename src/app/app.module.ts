@@ -21,7 +21,7 @@ registerLocaleData(localeES, "es");
     AppRoutingModule,
     HttpClientModule,
     HotToastModule.forRoot(),
-    SharedModule
+    SharedModule,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy }

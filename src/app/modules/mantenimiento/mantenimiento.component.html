@@ -18,7 +18,8 @@
             [class]="'cursor-pointer'" [spanClass]="''" [selected]="selectedTab" (click)="onClickButton('Talla')">
         </app-custom-tab-button>
     </div>
-    <div class="w-full h-full">
+    
+    <div *ngIf="!isLoading" class="w-full h-full p-4 border rounded-lg overflow-auto">
         <app-categoria *ngIf="selectedTab == 'Categoría'"></app-categoria>
         <app-material *ngIf="selectedTab == 'Material'"></app-material>
         <app-color *ngIf="selectedTab == 'Color'"></app-color>

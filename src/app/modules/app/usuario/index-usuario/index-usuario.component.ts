@@ -101,6 +101,7 @@ export class IndexUsuarioComponent implements OnInit
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -116,6 +117,7 @@ export class IndexUsuarioComponent implements OnInit
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -131,6 +133,7 @@ export class IndexUsuarioComponent implements OnInit
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
+      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',

@@ -70,7 +70,8 @@ export class ColorComponent implements OnInit {
 
   // ================  ================ //
   formColor = new FormGroup({
-    color: new FormControl('', [Validators.required])
+    color: new FormControl('', [Validators.required]),
+    hexadecimal: new FormControl('#', [Validators.required])
   });
 
   data: Color[] = [];
@@ -80,6 +81,7 @@ export class ColorComponent implements OnInit {
   itemSelected: Color = {
     id_color: 0,
     color: '',
+    hexadecimal: '',
     user_crea: '',
     fec_crea: ''
   }
@@ -91,10 +93,12 @@ export class ColorComponent implements OnInit {
     this.itemSelected = {
       id_color: 0,
       color: '',
+      hexadecimal: '',
       user_crea: '',
       fec_crea: ''
     }
     this.formColor.controls.color.setValue('');
+    this.formColor.controls.hexadecimal.setValue('#');
   }
 
   /** ------------------------------------ Methods onClick ------------------------------------ **/
@@ -106,6 +110,7 @@ export class ColorComponent implements OnInit {
         case 'Agregar':
           data = {
             color: String(this.formColor.value.color),
+            hexadecimal: String(this.formColor.value.hexadecimal),
             user_crea: this.userLogeado.usuario
           }
 
@@ -116,6 +121,7 @@ export class ColorComponent implements OnInit {
         case 'Actualizar':
           data = {
             color: String(this.formColor.value.color),
+            hexadecimal: String(this.formColor.value.hexadecimal),
             user_crea: this.userLogeado.usuario
           }
 
@@ -134,6 +140,7 @@ export class ColorComponent implements OnInit {
     if (this.btnText === 'Agregar') {
       this.itemSelected = this.data[index];
       this.formColor.controls.color.setValue(this.itemSelected.color);
+      this.formColor.controls.hexadecimal.setValue(this.itemSelected.hexadecimal);
       this.btnText = 'Actualizar';
     }
   }

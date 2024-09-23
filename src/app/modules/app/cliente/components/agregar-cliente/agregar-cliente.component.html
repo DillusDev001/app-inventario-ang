@@ -1,0 +1,56 @@
+<div
+    class="flex overflow-auto absolute top-0 right-0 left-0 justify-center items-center w-full h-full bg-primary-100 bg-opacity-60 backdrop-filter backdrop-blur-sm z-10">
+    <div class="p-4 w-full max-w-lg max-h-full">
+        <div class="bg-color-white rounded-lg shadow">
+            <div class="flex flex-col md:p-5 items-center gap-4">
+                <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
+
+                <div *ngIf="!isLoading" class="flex flex-col p-4 md:p-5 text-center gap-4">
+
+                    <app-custom-title [id]="'id_title_usuario'" [label]="title"
+                        [class]="'w-full text-center uppercase text-primary-500'">
+                    </app-custom-title>
+
+                    <form class="flex flex-col gap-4 lg:grid lg:grid-cols-2 h-max overflow-auto">
+
+                        <app-custom-input-2 class="col-span-2" [id]="'id_input_cliente'"
+                            [label]="'Cliente'" [type]="'text'" [autocomplete]="''"
+                            [class]="''" [control]="formCliente.controls.cliente"
+                            [icon]="'fa-solid fa-user fa-lg'">
+                        </app-custom-input-2>
+
+                        <app-custom-input-2 [id]="'id_input_razon'"
+                            [label]="'Razón'" [type]="'text'" [autocomplete]="''"
+                            [class]="''" [control]="formCliente.controls.razon"
+                            [icon]="''">
+                        </app-custom-input-2>
+
+                        <app-custom-input-2 [id]="'id_input_nit'"
+                            [label]="'NIT'" [type]="'text'" [autocomplete]="''"
+                            [class]="''" [control]="formCliente.controls.nit"
+                            [icon]="''">
+                        </app-custom-input-2>
+
+                        <app-custom-input-2 class="col-span-2" [id]="'id_input_celular'"
+                            [label]="'Celular'" [type]="'text'" [autocomplete]="''"
+                            [class]="''" [control]="formCliente.controls.celular"
+                            [icon]="'fa-solid fa-phone fa-lg'">
+                        </app-custom-input-2>
+
+                    </form>
+
+                    <div class="flex flex-col gap-4 lg:grid lg:grid-cols-2 w-full overflow-auto">
+                        <app-custom-button-2 *ngIf="type !== 'ver'" class="w-full" [id]="'id_button_aceptar'"
+                            [label]="'Guardar'" [type]="'accept'" [icon]="''" [class]="'w-full'"
+                            [valid]="formCliente.valid && isOnline" (click)="onClickAceptar()">
+                        </app-custom-button-2>
+
+                        <app-custom-button-1 class="w-full" [id]="'id_button_cancelar'" [label]="'Cancelar'"
+                            [type]="'cancel'" [icon]="''" [class]="'w-full'" [valid]="true" (click)="onClickCancelar()">
+                        </app-custom-button-1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

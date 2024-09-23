@@ -8,9 +8,14 @@
         <div class="flex flex-col md:flex-row gap-2 h-max border rounded-lg border-color-text p-2  md:divide-x">
             <div class="flex flex-grow w-full">
                 <form [formGroup]="formColor" class="flex flex-col md:flex-row gap-2 w-full">
-                    <app-custom-input-2 class="h-12 w-full md:h-full md:flex-grow" [id]="'id_busqueda_value'"
+                    <app-custom-input-2 class="h-12 w-full md:h-full md:flex-grow" [id]="'id_color'"
                         [label]="'Color...'" [type]="'text'" [autocomplete]="''" [class]="''"
                         [control]="formColor.controls.color" [icon]="''">
+                    </app-custom-input-2>
+
+                    <app-custom-input-2 class="h-12 w-full md:h-full md:flex-grow" [id]="'id_hexadecimal'"
+                        [label]="'Hexadeximal...'" [type]="'text'" [autocomplete]="''" [class]="''"
+                        [control]="formColor.controls.hexadecimal" [icon]="''">
                     </app-custom-input-2>
 
                     <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="btnText"
@@ -28,7 +33,7 @@
 
     </div>
 
-    <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full">
+    <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full overflow-auto">
         <!-- Table y Nav -->
         <div class="overflow-auto shadow-md border rounded-lg grow">
             <table
@@ -37,9 +42,9 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">#</th>
 
-                        <th scope="col" class="px-6 py-3">Categoría</th>
+                        <th scope="col" class="px-6 py-3">Color</th>
 
-                        <th scope="col" class="px-6 py-3">Usuario</th>
+                        <th scope="col" class="px-6 py-3"></th>
 
                         <th scope="col" class="px-6 py-3">Fecha</th>
 
@@ -54,7 +59,10 @@
 
                         <td class="px-2 py-2">{{ item.color }}</td>
 
-                        <td class="px-2 py-2">{{ item.user_crea }}</td>
+                        <td class="px-2 py-2">
+                            <div class="border w-full h-4 rounded" [ngStyle]="{ 'background-color': item.hexadecimal }">
+                            </div>
+                        </td>
 
                         <td class="px-2 py-2">{{ item.fec_crea | date: 'dd-MM-yyyy' }}</td>
 

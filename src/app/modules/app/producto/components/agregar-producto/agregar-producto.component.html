@@ -28,9 +28,19 @@
                         [control]="formProducto.controls.talla" [class]="''" [data]="dataTalla">
                     </app-custom-drop-down>
 
-                    <app-custom-drop-down [id]="'id_drop_down_color'" [label]="'Color...'"
-                        [control]="formProducto.controls.color" [class]="''" [data]="dataColor">
-                    </app-custom-drop-down>
+
+
+                    <div class="flex gap-2">
+                        <app-custom-drop-down [id]="'id_drop_down_color'" [label]="'Color...'"
+                            [control]="formProducto.controls.color" [class]="''" [data]="dataColor"
+                            (valueChanged)="onDropdownValueChangeSucursal($event)">
+                        </app-custom-drop-down>
+
+                        <div class="border w-8 h-full rounded" [ngStyle]="{ 'background-color': hexaColor}">
+                        </div>
+                    </div>
+
+
 
                     <app-custom-drop-down [id]="'id_drop_down_material'" [label]="'Material...'"
                         [control]="formProducto.controls.material" [class]="''" [data]="dataMaterial">

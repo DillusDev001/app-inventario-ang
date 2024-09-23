@@ -136,8 +136,13 @@ export class LoginComponent implements OnInit {
             result as ApiResult;
 
             if (result.boolean) {
-              //goShared(this.router);
-              this.saveLoggedData(result.data[0]);
+              const u = result.data[0] as Usuario;
+              if(u.estado === 1){
+                this.saveLoggedData(result.data[0]);
+              } else {
+                this.customErrorToast('El usuario fue eliminado.');
+                this.isLoading = false;
+              }
             } else {
               this.customErrorToast(result.message);
               this.isLoading = false;
@@ -172,6 +177,7 @@ export class LoginComponent implements OnInit {
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -187,6 +193,7 @@ export class LoginComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -202,6 +209,7 @@ export class LoginComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
+      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',

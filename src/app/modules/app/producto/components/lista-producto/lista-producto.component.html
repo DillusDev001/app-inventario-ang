@@ -1,5 +1,4 @@
-<div
-    class="relative flex flex-col justify-center w-full h-full items-center shadow-lg overflow-auto pt-4 gap-4 bg-color-white p-4">
+<div class="relative flex flex-col justify-center w-full h-full shadow-lg overflow-auto pt-4 gap-4 bg-color-white p-4">
 
     <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
 
@@ -43,18 +42,17 @@
 
     </div>
 
-    <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full">
+    <!-- Table -->
+    <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full overflow-auto">
         <!-- Table y Nav -->
         <div class="overflow-auto shadow-md border rounded-lg grow">
             <table
-                class="w-max md:w-full text-sm text-center rtl:text-right text-primary-900 table-fixed md:table-auto">
+                class="w-max md:w-full text-sm text-left rtl:text-right text-primary-900 table-fixed md:table-auto">
                 <thead class="text-sm text-primary-800 uppercase bg-primary-50">
                     <tr>
                         <th scope="col" class="px-6 py-3">#</th>
 
                         <th scope="col" class="px-6 py-3">Código Producto</th>
-
-                        <th scope="col" class="px-6 py-3">Código Interno</th>
 
                         <th scope="col" class="px-6 py-3">Categoría</th>
 
@@ -78,8 +76,6 @@
                             <th scope="col" class="px-6 py-3">{{ i + 1 }}</th>
 
                             <th scope="col" class="px-6 py-3">{{ item.cod_producto }}</th>
-
-                            <th scope="col" class="px-6 py-3">{{ item.codigo }}</th>
 
                             <th scope="col" class="px-6 py-3">{{ item.categoria }}</th>
 

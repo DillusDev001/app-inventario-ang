@@ -31,13 +31,18 @@ import { CustomCardAlmacenComponent } from './components/custom-card-almacen/cus
 import { CustomAddSucursalComponent } from './components/custom-add-sucursal/custom-add-sucursal.component';
 import { CustomAddAlmacenComponent } from './components/custom-add-almacen/custom-add-almacen.component';
 import { CustomPopoverProductoComponent } from './components/custom-popover-producto/custom-popover-producto.component';
+import { CustomAlertConfirmationComponent } from './components/custom-alert-confirmation/custom-alert-confirmation.component';
+import { CustomAddProductoStockComponent } from './components/custom-add-producto-stock/custom-add-producto-stock.component';
+import { CustomLabel0Component } from './components/custom-label-0/custom-label-0.component';
 
 
 @NgModule({
   declarations: [
     CustomAddSucursalComponent,
+    CustomAddProductoStockComponent,
     CustomAddAlmacenComponent,
 
+    CustomAlertConfirmationComponent,
     CustomAlertInput1Component,
 
     CustomButton1Component,
@@ -68,6 +73,7 @@ import { CustomPopoverProductoComponent } from './components/custom-popover-prod
 
     CustomStatusIndicatorComponent,
 
+    CustomLabel0Component,
     CustomLabel1Component,
     CustomLabel2Component,
     CustomLabel3Component,
@@ -91,8 +97,10 @@ import { CustomPopoverProductoComponent } from './components/custom-popover-prod
   ],
   exports: [
     CustomAddSucursalComponent,
+    CustomAddProductoStockComponent,
     CustomAddAlmacenComponent,
 
+    CustomAlertConfirmationComponent,
     CustomAlertInput1Component,
 
     CustomButton1Component,
@@ -123,6 +131,7 @@ import { CustomPopoverProductoComponent } from './components/custom-popover-prod
 
     CustomStatusIndicatorComponent,
 
+    CustomLabel0Component,
     CustomLabel1Component,
     CustomLabel2Component,
     CustomLabel3Component,

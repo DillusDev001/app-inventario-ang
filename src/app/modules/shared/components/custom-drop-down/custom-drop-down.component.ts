@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -6,12 +6,21 @@ import { FormControl } from '@angular/forms';
   templateUrl: './custom-drop-down.component.html',
   styleUrls: ['./custom-drop-down.component.css']
 })
-export class CustomDropDownComponent {
+export class CustomDropDownComponent implements OnInit {
   @Input() id!: string;
   @Input() label!: string;
   @Input() control!: FormControl;
   @Input() class!: string;
   @Input() data!: any[];
+
+  @Output() valueChanged = new EventEmitter<any>();
+
+  ngOnInit() {
+    this.control.valueChanges.subscribe(value => {
+      const selectedItem = this.data.find(item => item.value === value);
+      this.valueChanged.emit(selectedItem); // Emitir el objeto completo
+    });
+  }
 
   classSet: string = 'border-color-unfocus text-color-unfocus';
 

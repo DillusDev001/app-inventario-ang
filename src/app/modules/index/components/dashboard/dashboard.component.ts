@@ -122,10 +122,19 @@ export class DashboardComponent implements OnInit {
         this.title = 'Sucursal';
         break;
 
+      case '/admin/cliente':
+        this.menuSelected = 'Clientes';
+        this.title = 'Clientes';
+        break;
 
+      // Compras
 
-      case '/admin/usuario/lista':
-      case '/admin/usuario/agregar':
+      case '/admin/venta':
+        this.menuSelected = 'Ventas';
+        this.title = 'Ventas';
+        break;
+
+      case '/admin/usuario':
         this.menuSelected = 'Usuarios';
         this.title = 'Usuarios';
         break;
@@ -170,7 +179,7 @@ export class DashboardComponent implements OnInit {
         this.open = false;
       }
     } else {
-      console.log('nada');
+      console.log(eventTitle);
     }
 
     this.scrollSelectedItemIntoView();
@@ -193,6 +202,7 @@ export class DashboardComponent implements OnInit {
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -208,6 +218,7 @@ export class DashboardComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
+      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -223,6 +234,7 @@ export class DashboardComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
+      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',
