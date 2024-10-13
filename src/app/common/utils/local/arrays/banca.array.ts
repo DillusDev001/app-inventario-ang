@@ -64,6 +64,11 @@ export const arrayMoneda = [
 ]
 
 export const arrayTipoPago = [
+    { value: 'abono', data: 'Abono' },
+    { value: 'retiro', data: 'Retiro' },
+]
+
+export const arrayTipoCuentaHistorial = [
     { value: 'Efectivo', data: 'Efectivo' },
     { value: 'Transferencia', data: 'Transferencia' },
     { value: 'Tarjeta de Débito', data: 'Tarjeta de Débito' },

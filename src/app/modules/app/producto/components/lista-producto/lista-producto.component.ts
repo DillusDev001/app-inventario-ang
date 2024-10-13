@@ -11,6 +11,7 @@ import { Producto } from 'src/app/common/utils/app/producto/producto.interface';
 import { ProductoService } from 'src/app/common/utils/app/producto/producto.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { arrayBusquedaProducto } from 'src/app/common/utils/local/arrays/busqueda.array';
+import { arraySimpleMenu_0, arraySimpleMenu_1 } from 'src/app/common/utils/local/menu/menu-simple.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
 
 @Component({
@@ -89,6 +90,10 @@ export class ListaProductoComponent implements OnInit {
 
   showAddProducto = false;
 
+  // Menu
+  dataSimpleMenu_0 = arraySimpleMenu_0; // Eliminar
+  dataSimpleMenu_1 = arraySimpleMenu_1; // Habilitar
+
   /** ---------------------------------------- Methods ---------------------------------------- **/
   limpiarBusqueda() {
     this.formBusqueda.controls.busqueda.setValue('');
@@ -122,24 +127,6 @@ export class ListaProductoComponent implements OnInit {
     this.getListaProductos();
   }
 
-  onClickActulizar(index: number) {
-    this.cod_prod_selected = this.dataProductos[index].cod_producto;
-    this.productoAddType = 'editar';
-    this.showAddProducto = true;
-  }
-
-  onClickEliminar(index: number) {
-    this.isLoading = true;
-
-    this.eliminarProducto(this.dataProductos[index].cod_producto, 0);
-  }
-
-  onClickHabilitar(index: number) {
-    this.isLoading = true;
-
-    this.eliminarProducto(this.dataProductos[index].cod_producto, 1);
-  }
-
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
   getListaProductos() {
     this.dataProductos = [];
@@ -171,7 +158,7 @@ export class ListaProductoComponent implements OnInit {
     });
   }
 
-  eliminarProducto(cod_producto: string, estado: number) {
+  estadoProducto(cod_producto: string, estado: number) {
     const data = {
       estado: estado
     }
@@ -182,7 +169,13 @@ export class ListaProductoComponent implements OnInit {
       if (result.boolean) {
         this.msgAlert = estado === 1 ? 'Se ha habilitado correctamente.' : 'Se ha eliminado correctamente.';
         this.customSuccessToast(this.msgAlert);
-        this.getListaProductos();
+
+        if (this.formBusqueda.controls.value.value !== '') {
+          this.onClickBusqueda();
+        } else {
+          this.getListaProductos();
+        }
+        
       } else {
         this.customErrorToast(result.message);
         this.isLoading = false;
@@ -203,11 +196,33 @@ export class ListaProductoComponent implements OnInit {
     }
   }
 
+  onReciveResponseSimpleMenu(event: ResponseEmitter, index: number) {
+    const action = event.data;
+
+    switch (action) {
+      case 'ver':
+      case 'editar':
+        this.cod_prod_selected = this.dataProductos[index].cod_producto;
+        this.productoAddType = action;
+        this.showAddProducto = true;
+        break;
+
+      case 'eliminar':
+        this.isLoading = true;
+        this.estadoProducto(this.dataProductos[index].cod_producto, 0);
+        break;
+
+      case 'habilitar':
+        this.isLoading = true;
+        this.estadoProducto(this.dataProductos[index].cod_producto, 1);
+        break;
+    }
+  }
+
   /** --------------------------------------- ShowAlerts -------------------------------------- **/
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -223,7 +238,6 @@ export class ListaProductoComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -239,7 +253,6 @@ export class ListaProductoComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
-      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',

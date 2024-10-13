@@ -5,7 +5,7 @@
     <!-- Botones Busqueda -->
     <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
         <!-- Botones y buscador -->
-        <div class="flex flex-col md:flex-row gap-2 h-max border rounded-lg border-color-text p-2">
+        <div class="flex flex-col md:flex-row gap-2 h-max border rounded-lg border-color-text p-2  md:divide-x">
             <div class="flex flex-grow w-full">
                 <form [formGroup]="formBusqueda" class="flex flex-col md:flex-row gap-2 w-full">
                     <app-custom-drop-down class="h-12 w-full md:w-max md:h-full" [id]="'id_pregunta'"
@@ -18,21 +18,19 @@
                         [control]="formBusqueda.controls.value" [icon]="''">
                     </app-custom-input-2>
 
-                    <div class="flex gap-2 justify-center">
-                        <app-custom-button-2 class="w-full h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
-                            [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="''"
-                            [valid]="formBusqueda.valid && isOnline" (click)="onClickBusqueda()">
-                        </app-custom-button-2>
+                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="''"
+                        [valid]="formBusqueda.valid" (click)="onClickBusqueda()">
+                    </app-custom-button-1>
 
-                        <app-custom-button-2 class="w-full h-12" [id]="'id_button_limpiar'" [label]="'Limpiar'"
-                            [type]="'cancel'" [icon]="'fa-solid fa-broom fa-lg'" [class]="''" [valid]="isOnline"
-                            (click)="onClicklimpiar()">
-                        </app-custom-button-2>
-                    </div>
+                    <app-custom-button-2 class="w-full md:w-max h-12" [id]="'id_button_limpiar'" [label]="'Limpiar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-broom fa-lg'" [class]="''" [valid]="true"
+                        (click)="onClickLimpiar()">
+                    </app-custom-button-2>
+
                 </form>
             </div>
         </div>
-
     </div>
 
     <!-- Table y Nav -->
@@ -65,7 +63,7 @@
             <tbody>
                 <ng-container *ngFor="let item of dataUsuarios; index as i">
                     <tr *ngIf="item.rol !== 'Developer' || userLogeado.rol === 'Developer'"
-                        [ngClass]="{'text-red-800': item.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
+                    [ngClass]="{'bg-red-50 text-red-800': item.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
                         class="text-primary-800 bg-white border-b">
                         <td class=" px-2 py-2">{{ i + 1 }}</td>
 
@@ -85,23 +83,12 @@
                             <app-custom-status-indicator [status]="item.estado"></app-custom-status-indicator>
                         </td>
 
-                        <td class="flex gap-4 px-2 py-2 z-10">
-                            <p class="underline underline-offset-1 cursor-pointer" (click)="onClickVer(i)">
-                                Ver
-                            </p>
-
-                            <p class="underline underline-offset-1 cursor-pointer" (click)="onClickActulizar(i)">
-                                Actualizar
-                            </p>
-
-                            <p *ngIf="item.estado === 0 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador') && userLogeado.usuario !== item.usuario"
-                                class="underline underline-offset-1 cursor-pointer text-red-700"
-                                (click)="onClickHabilitar(i)">Habilitar</p>
-
-                            <p *ngIf="item.estado === 1 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador') && userLogeado.usuario !== item.usuario"
-                                class="underline underline-offset-1 cursor-pointer text-info-700"
-                                (click)="onClickEliminar(i)">Eliminar</p>
-                        </td>
+                        <th scope="col" class="px-6 py-3">
+                            <app-custom-dot-menu
+                                [data]="item.estado === 1 ? dataSimpleMenu_0 : dataSimpleMenu_1"
+                                [class]="''"
+                                (response)="onReciveResponseSimpleMenu($event, i)"></app-custom-dot-menu>
+                        </th>
                     </tr>
                 </ng-container>
             </tbody>

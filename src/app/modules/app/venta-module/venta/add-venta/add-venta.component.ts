@@ -16,6 +16,7 @@ import { Result } from '@zxing/library';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Alignment, Margins, PageSize } from 'pdfmake/interfaces';
+import { pdfTicketPageMargins, pdfTicketPageSize, pdfStyles } from 'src/app/common/utils/pdf/config.pdf';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -114,11 +115,8 @@ export class AddVentaComponent implements OnInit {
   printTicket() {
     // Define the document structure
     const docDefinition = {
-      pageSize: {
-        width: 226.77, // 8 cm en puntos
-        height: 'auto', // Altura variable en función del contenido
-      } as PageSize,
-      pageMargins: [10, 10] as Margins,
+      pageSize: pdfTicketPageSize as PageSize,
+      pageMargins: pdfTicketPageMargins,
       content: [
         { text: 'Ticket de Venta', style: 'header', alignment: 'center' as Alignment },
         { text: '------------------------------' },
@@ -153,17 +151,7 @@ export class AddVentaComponent implements OnInit {
           style: 'total',
         },
       ],
-      styles: {
-        header: {
-          fontSize: 14,
-          bold: true,
-        },
-        total: {
-          fontSize: 12,
-          bold: true,
-          alignment: 'right' as Alignment,
-        },
-      },
+      styles: pdfStyles,
       defaultStyle: {
         fontSize: 12,
       },

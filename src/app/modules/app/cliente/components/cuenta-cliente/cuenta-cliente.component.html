@@ -1,0 +1,132 @@
+<div
+    class="flex overflow-auto absolute top-0 right-0 left-0 justify-center items-center w-full h-full bg-primary-100 bg-opacity-60 backdrop-filter backdrop-blur-sm z-10">
+    <div class="p-4 w-full max-w-lg max-h-full">
+        <div class="w-full lg:w-max bg-color-white rounded-lg shadow">
+
+            <app-custom-my-loading *ngIf="isLoading" [class]="'w-80 m-4'"></app-custom-my-loading>
+
+            <div *ngIf="!isLoading" class="relative flex flex-col p-4 md:p-5 text-center gap-4">
+
+                <!-- Cerrar -->
+                <button (click)="onClickCerrarHistorial()"
+                    class="absolute top-2 right-2 text-primary-500 text-lg hover:text-gray-700">
+                    &times;
+                </button>
+
+                <app-custom-title [id]="'id_title_usuario'" [label]="'Cuenta Cliente'"
+                    [class]="'w-full text-center uppercase text-primary-500'">
+                </app-custom-title>
+
+                <!-- CLIENTE -->
+                <app-custom-label-1 [id]="'id_label_1_'" [label]="'Cliente'" [text]="cliente.cliente"
+                    [class]="'text-primary-500 border-primary-500 bg-info-50'"></app-custom-label-1>
+
+                <!-- CREAR CUENTA CLIENTE -->
+                <app-custom-button-2 *ngIf="!hasClienteCuenta" class="w-full" [id]="'id_button_1_accept'"
+                    [label]="'CREAR CUENTA'" [type]="'accept'" [icon]="''" [class]="'w-full'" [valid]="true"
+                    (click)="onClickCrearCuenta()">
+                </app-custom-button-2>
+
+                <!-- DATOS CUENTA -->
+                <div *ngIf="hasClienteCuenta" class="flex flex-col gap-4">
+
+                    <div class="flex flex-col lg:grid lg:grid-cols-2 gap-2">
+                        <app-custom-label-1 [id]="'id_label_1_'" [label]="'Monto'"
+                            [text]="clienteCuenta.monto | currency:'BOB':'Bs. '"
+                            [class]="'text-primary-500 border-primary-500 bg-info-50'"></app-custom-label-1>
+
+                        <app-custom-label-1 [id]="'id_label_1_'" [label]="'Fecha'"
+                            [text]="clienteCuenta.fec_mod | date: 'dd-MM-yyyy'"
+                            [class]="'text-primary-500 border-primary-500 bg-info-50'"></app-custom-label-1>
+                    </div>
+
+                    <!-- Agregar Movimiento -->
+                    <app-custom-button-2 *ngIf="!showAgregarHistorial" class="w-full col-span-2"
+                        [id]="'id_button_1_accept'" [label]="'AGREGAR MOVIMIENTO'" [type]="'accept'" [icon]="''"
+                        [class]="'w-full'" [valid]="true" (click)="onClickShowAgregarHistorial(true)">
+                    </app-custom-button-2>
+
+                    <!-- Agregar Movimiento Form -->
+                    <form *ngIf="showAgregarHistorial" class="flex flex-col gap-4 lg:grid lg:grid-cols-2"
+                        [ngClass]="{'opacity-100': showAgregarHistorial}">
+
+                        <app-custom-drop-down (valueChanged)="onDropdownValueChangeTipo($event)"
+                            [id]="'id_drop_down_tipo'" [label]="'Tipo'" [control]="formMovimiento.controls.tipo"
+                            [class]="''" [data]="dataTipoCuentaHistorial">
+                        </app-custom-drop-down>
+
+                        <app-custom-drop-down [id]="'id_drop_down'" [label]="'Método'"
+                            [control]="formMovimiento.controls.metodo_cuenta" [class]="''" [data]="dataMetodoHistorial">
+                        </app-custom-drop-down>
+
+                        <app-custom-input-2 [id]="'id_input_1'" [label]="'Monto'" [type]="'text'" [autocomplete]="''"
+                            [class]="''" [control]="formMovimiento.controls.monto"
+                            [icon]="'fa-solid fa-dollar-sign fa-lg'">
+                        </app-custom-input-2>
+
+                        <!-- AGREGAR - CANCELAR -->
+                        <div class="flex gap-4 w-full col-span-2">
+                            <app-custom-button-1 class="w-full" [id]="'id_button_1_accept'" [label]="'CANCELAR'"
+                                [type]="'cancel'" [icon]="''" [class]="'w-full'" [valid]="true"
+                                (click)="onClickShowAgregarHistorial(false)">
+                            </app-custom-button-1>
+
+                            <app-custom-button-2 class="w-full" [id]="'id_button_1_cancel'" [label]="'AGREGAR'"
+                                [type]="'accept'" [icon]="''" [class]="'w-full'" [valid]="true"
+                                (click)="onClickAgregarHistorial()">
+                            </app-custom-button-2>
+                        </div>
+                    </form>
+
+                    <!-- Table -->
+                    <div *ngIf="!showAgregarHistorial"
+                        class="w-full md:w-max overflow-auto shadow-md border rounded-lg grow">
+                        <table
+                            class="w-max md:w-full text-sm text-left rtl:text-right text-primary-900 table-fixed md:table-auto">
+                            <thead class="text-sm text-primary-800 uppercase bg-primary-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">#</th>
+
+                                    <th scope="col" class="px-6 py-3">Tipo</th>
+
+                                    <th scope="col" class="px-6 py-3">Método</th>
+
+                                    <th scope="col" class="px-6 py-3">Monto</th>
+
+                                    <th scope="col" class="px-6 py-3">Fecha</th>
+
+                                    <th scope="col" class="px-6 py-3"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ng-container *ngFor="let item of dataHistorial; index as i">
+                                    <tr [ngClass]="{ 'bg-primary-50' : i % 2 !== 0 }"
+                                        class="text-primary-800 bg-white border-b">
+                                        <th scope="col" class="px-6 py-3">{{ i + 1 }}</th>
+
+                                        <th scope="col" class="px-6 py-3">{{ item.tipo }}</th>
+
+                                        <th scope="col" class="px-6 py-3">{{ item.metodo_cuenta }}</th>
+
+                                        <th scope="col" class="px-6 py-3">{{ item.monto | currency:'BOB':'Bs. ' }}</th>
+
+                                        <th scope="col" class="px-6 py-3">{{ item.fec_mod | date: 'dd-MM-yyyy HH:mm' }}
+                                        </th>
+
+                                        <th scope="col" class="px-6 py-3">
+                                            <app-custom-icon (click)="onClickPrintComprobante(i)"
+                                                [icon]="'fa-solid fa-print fa-lg'"
+                                                [class]="'cursor-pointer'">
+                                            </app-custom-icon>
+                                        </th>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -35,6 +35,12 @@ export class StockGeneralService {
     return this.http.get<ApiResult>(url);
   }
 
+  // /v1/stock-general/busqueda/{attribute}/{value}
+  public stockGeneralFindAtribute(attribute: string, value: string): Observable<ApiResult> {
+    const url = this.urlBase + this.urlVersion + this.urlModule + '/busqueda/' + attribute + '/' + value;
+    return this.http.get<ApiResult>(url);
+  }
+
   public stockGeneralUpdate(cod_producto: string, data: any): Observable<ApiResult> {
     const url = this.urlBase + this.urlVersion + this.urlModule + '/' + cod_producto;
     return this.http.patch<ApiResult>(url, data);

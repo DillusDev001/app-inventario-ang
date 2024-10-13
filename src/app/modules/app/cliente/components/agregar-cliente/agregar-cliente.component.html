@@ -13,27 +13,29 @@
 
                     <form class="flex flex-col gap-4 lg:grid lg:grid-cols-2 h-max overflow-auto">
 
-                        <app-custom-input-2 class="col-span-2" [id]="'id_input_cliente'"
-                            [label]="'Cliente'" [type]="'text'" [autocomplete]="''"
-                            [class]="''" [control]="formCliente.controls.cliente"
+                        <app-custom-input-2 class="col-span-2" [id]="'id_input_cliente'" [label]="'Cliente'"
+                            [type]="'text'" [autocomplete]="''" [class]="''" [control]="formCliente.controls.cliente"
                             [icon]="'fa-solid fa-user fa-lg'">
                         </app-custom-input-2>
 
-                        <app-custom-input-2 [id]="'id_input_razon'"
-                            [label]="'Razón'" [type]="'text'" [autocomplete]="''"
-                            [class]="''" [control]="formCliente.controls.razon"
-                            [icon]="''">
+                        <app-custom-input-2 [id]="'id_input_ci'" [label]="'CI'" [type]="'text'"
+                            [autocomplete]="''" [class]="''" [control]="formCliente.controls.ci" [icon]="''">
                         </app-custom-input-2>
 
-                        <app-custom-input-2 [id]="'id_input_nit'"
-                            [label]="'NIT'" [type]="'text'" [autocomplete]="''"
-                            [class]="''" [control]="formCliente.controls.nit"
-                            [icon]="''">
+                        <app-custom-drop-down [id]="'id_drop_down_ciudad'" [label]="'Ciudad...'"
+                            [control]="formCliente.controls.ciudad" [class]="''" [data]="dataCiudad">
+                        </app-custom-drop-down>
+
+                        <app-custom-input-2 [id]="'id_input_razon'" [label]="'Razón'" [type]="'text'"
+                            [autocomplete]="''" [class]="''" [control]="formCliente.controls.razon" [icon]="''">
                         </app-custom-input-2>
 
-                        <app-custom-input-2 class="col-span-2" [id]="'id_input_celular'"
-                            [label]="'Celular'" [type]="'text'" [autocomplete]="''"
-                            [class]="''" [control]="formCliente.controls.celular"
+                        <app-custom-input-2 [id]="'id_input_nit'" [label]="'NIT'" [type]="'text'" [autocomplete]="''"
+                            [class]="''" [control]="formCliente.controls.nit" [icon]="''">
+                        </app-custom-input-2>
+
+                        <app-custom-input-2 class="col-span-2" [id]="'id_input_celular'" [label]="'Celular'"
+                            [type]="'text'" [autocomplete]="''" [class]="''" [control]="formCliente.controls.celular"
                             [icon]="'fa-solid fa-phone fa-lg'">
                         </app-custom-input-2>
 

@@ -34,6 +34,7 @@ import { CustomPopoverProductoComponent } from './components/custom-popover-prod
 import { CustomAlertConfirmationComponent } from './components/custom-alert-confirmation/custom-alert-confirmation.component';
 import { CustomAddProductoStockComponent } from './components/custom-add-producto-stock/custom-add-producto-stock.component';
 import { CustomLabel0Component } from './components/custom-label-0/custom-label-0.component';
+import { CustomDotMenuComponent } from './components/custom-dot-menu/custom-dot-menu.component';
 
 
 @NgModule({
@@ -54,6 +55,8 @@ import { CustomLabel0Component } from './components/custom-label-0/custom-label-
     CustomCodeComponent,
 
     CustomConnectionStatusComponent,
+
+    CustomDotMenuComponent,
 
     CustomDropDownComponent,
     CustomDropDownDarkComponent,
@@ -112,6 +115,8 @@ import { CustomLabel0Component } from './components/custom-label-0/custom-label-
     CustomCodeComponent,
 
     CustomConnectionStatusComponent,
+
+    CustomDotMenuComponent,
 
     CustomDropDownComponent,
     CustomDropDownDarkComponent,

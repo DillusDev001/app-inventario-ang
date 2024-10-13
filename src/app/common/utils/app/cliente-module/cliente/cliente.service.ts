@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { urlBaseApi, versionApi } from '../../local/server.local';
 import { Observable } from 'rxjs';
 import { ApiResult } from 'src/app/common/interfaces/api/api.result';
+import { urlBaseApi, versionApi } from '../../../local/server.local';
 
 @Injectable({
   providedIn: 'root'

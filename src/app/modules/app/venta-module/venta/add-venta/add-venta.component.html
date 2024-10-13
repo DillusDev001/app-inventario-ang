@@ -22,9 +22,11 @@
 
                 <input type="text" (change)="agregarArticulo($event)" placeholder="Escanea el código aquí" />
 
+                <!--
                 <zxing-scanner (scanSuccess)="handleQrCodeResult($event)" (camerasFound)="hasDevices = true"
                     (camerasNotFound)="hasDevices = false" (permissionResponse)="hasPermission = $event">
                 </zxing-scanner>
+                -->
 
                 <div *ngIf="scannedResult">
                     <p>Scanned Result: {{ scannedResult }}</p>

@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     IndexUsuarioComponent,
     ListaUsuarioComponent,
-    AgregarUsuarioComponent
+    AgregarUsuarioComponent,
   ],
   imports: [
     CommonModule,

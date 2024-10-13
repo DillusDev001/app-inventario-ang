@@ -46,8 +46,7 @@
     <div *ngIf="!isLoading" class="flex flex-col gap-4 w-full h-full overflow-auto">
         <!-- Table y Nav -->
         <div class="overflow-auto shadow-md border rounded-lg grow">
-            <table
-                class="w-max md:w-full text-sm text-left rtl:text-right text-primary-900 table-fixed md:table-auto">
+            <table class="w-max md:w-full text-sm text-left rtl:text-right text-primary-900 table-fixed md:table-auto">
                 <thead class="text-sm text-primary-800 uppercase bg-primary-50">
                     <tr>
                         <th scope="col" class="px-6 py-3">#</th>
@@ -71,7 +70,7 @@
                 <tbody>
                     <ng-container *ngFor="let item of dataProductos; index as i">
                         <tr *ngIf="item.estado === 1 || (item.estado === 0 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador'))"
-                            [ngClass]="{'text-red-800': item.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
+                            [ngClass]="{'bg-red-50 text-red-800': item.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
                             class="text-primary-800 bg-white border-b">
                             <th scope="col" class="px-6 py-3">{{ i + 1 }}</th>
 
@@ -87,16 +86,11 @@
 
                             <th scope="col" class="px-6 py-3">{{ item.precio_mayor | currency:'BOB':'Bs. '}}</th>
 
-                            <td class="px-2 py-2 flex gap-4">
-                                <p class="underline underline-offset-1 cursor-pointer text-info-700"
-                                    (click)="onClickActulizar(i)">Actualizar</p>
-                                <p *ngIf="item.estado === 1"
-                                    class="underline underline-offset-1 cursor-pointer text-red-700"
-                                    (click)="onClickEliminar(i)">Eliminar</p>
-                                <p *ngIf="item.estado === 0"
-                                    class="underline underline-offset-1 cursor-pointer text-info-700"
-                                    (click)="onClickHabilitar(i)">Habilitar</p>
-                            </td>
+                            <th scope="col" class="px-6 py-3">
+                                <app-custom-dot-menu [data]="item.estado === 1 ? dataSimpleMenu_0 : dataSimpleMenu_1"
+                                    [class]="''"
+                                    (response)="onReciveResponseSimpleMenu($event, i)"></app-custom-dot-menu>
+                            </th>
                         </tr>
                     </ng-container>
 

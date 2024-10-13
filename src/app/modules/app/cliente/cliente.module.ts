@@ -6,12 +6,14 @@ import { ListaClienteComponent } from './components/lista-cliente/lista-cliente.
 import { AgregarClienteComponent } from './components/agregar-cliente/agregar-cliente.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { CuentaClienteComponent } from './components/cuenta-cliente/cuenta-cliente.component';
 
 
 @NgModule({
   declarations: [
     ListaClienteComponent,
-    AgregarClienteComponent
+    AgregarClienteComponent,
+    CuentaClienteComponent
   ],
   imports: [
     CommonModule,

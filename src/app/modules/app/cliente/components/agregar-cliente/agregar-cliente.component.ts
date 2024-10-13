@@ -6,9 +6,10 @@ import { ApiResult } from 'src/app/common/interfaces/api/api.result';
 import { DataLocalStorage } from 'src/app/common/interfaces/local/data-local-storage';
 import { goLogin } from 'src/app/common/router/auth.route';
 import { NetworkStatusService } from 'src/app/common/services/network-status.service';
-import { Cliente } from 'src/app/common/utils/app/cliente/cliente.interface';
-import { ClienteService } from 'src/app/common/utils/app/cliente/cliente.service';
+import { Cliente } from 'src/app/common/utils/app/cliente-module/cliente/cliente.interface';
+import { ClienteService } from 'src/app/common/utils/app/cliente-module/cliente/cliente.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
+import { arrayCiudad } from 'src/app/common/utils/local/arrays/common.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
 
 @Component({
@@ -55,18 +56,22 @@ export class AgregarClienteComponent implements OnInit {
         this.title = 'Editar Cliente';
 
         this.formCliente.controls.cliente.setValue(this.cliente.cliente);
+        this.formCliente.controls.ci.setValue(this.cliente.ci);
         this.formCliente.controls.razon.setValue(this.cliente.razon);
         this.formCliente.controls.nit.setValue(this.cliente.nit);
         this.formCliente.controls.celular.setValue(this.cliente.celular);
+        this.formCliente.controls.ciudad.setValue(this.cliente.ciudad);
         break;
 
       case 'ver':
         this.title = 'Cliente';
 
         this.formCliente.controls.cliente.setValue(this.cliente.cliente);
+        this.formCliente.controls.ci.setValue(this.cliente.ci);
         this.formCliente.controls.razon.setValue(this.cliente.razon);
         this.formCliente.controls.nit.setValue(this.cliente.nit);
         this.formCliente.controls.celular.setValue(this.cliente.celular);
+        this.formCliente.controls.ciudad.setValue(this.cliente.ciudad);
 
         this.formCliente.disable();
         break;
@@ -95,10 +100,14 @@ export class AgregarClienteComponent implements OnInit {
   // ================  ================ //
   formCliente = new FormGroup({
     cliente: new FormControl('', [Validators.required]),
+    ci: new FormControl('', [Validators.required]),
     razon: new FormControl('', [Validators.required]),
     nit: new FormControl('', [Validators.required]),
     celular: new FormControl('', [Validators.required]),
+    ciudad: new FormControl('', [Validators.required]),
   });
+
+  dataCiudad = arrayCiudad;
 
   title: string = '';
 
@@ -120,9 +129,11 @@ export class AgregarClienteComponent implements OnInit {
           this.isLoading = true;
           data = {
             cliente: this.formCliente.value.cliente,
+            ci: this.formCliente.value.ci,
             razon: this.formCliente.value.razon,
             nit: this.formCliente.value.nit,
             celular: this.formCliente.value.celular,
+            ciudad: this.formCliente.value.ciudad,
           };
 
           this.clienteAgregar(data);
@@ -132,9 +143,11 @@ export class AgregarClienteComponent implements OnInit {
           this.isLoading = true;
           data = {
             cliente: this.formCliente.value.cliente,
+            ci: this.formCliente.value.ci,
             razon: this.formCliente.value.razon,
             nit: this.formCliente.value.nit,
             celular: this.formCliente.value.celular,
+            ciudad: this.formCliente.value.ciudad,
           };
 
           this.clienteActualizar(data);

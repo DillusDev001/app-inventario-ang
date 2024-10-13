@@ -1,42 +1,42 @@
 <div class="relative flex flex-col justify-center w-full h-full shadow-lg overflow-auto pt-4 gap-4 bg-color-white p-4">
 
-    <app-custom-alert-confirmation *ngIf="showConfirmation" (response)="onReciveResponseConfirmation($event)"
-        [msgAlert]="'¿Agregar artículos faltantes?'" [strBtn1]="'Sí, agregar'"
-        [strBtn2]="'Cancelar'"></app-custom-alert-confirmation>
-
     <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
 
-    <app-agregar-cliente *ngIf="showCliente" [cliente]="clienteSelected" [type]="clienteType" (response)="onReciveResponseAddCliente($event)"></app-agregar-cliente>
+    <app-agregar-cliente *ngIf="showCliente" [cliente]="clienteSelected" [type]="clienteType"
+        (response)="onReciveResponseAddCliente($event)"></app-agregar-cliente>
+
+    <app-cuenta-cliente (response)="onReciveResponseClienteCuenta($event)" *ngIf="showCuenta"
+        [cliente]="clienteSelected"></app-cuenta-cliente>
 
     <!-- Botones Busqueda -->
     <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
         <!-- Botones y buscador -->
         <div class="flex flex-col md:flex-row gap-2 h-max border rounded-lg border-color-text p-2  md:divide-x">
             <div class="flex flex-grow w-full">
-                <form [formGroup]="formBusqueda" class="flex flex-col md:flex-row gap-2 w-full overflow-auto">
+                <form [formGroup]="formBusqueda" class="flex flex-col md:flex-row gap-2 w-full">
                     <app-custom-drop-down class="h-12 w-full md:w-max md:h-full" [id]="'id_pregunta'"
                         [label]="'Búsqueda...'" [control]="formBusqueda.controls.busqueda" [class]="''"
                         [data]="dataBusquedaCliente">
                     </app-custom-drop-down>
 
-                    <app-custom-input-2 class="h-12 w-full md:w-max md:h-full md:flex-grow" [id]="'id_busqueda_value'"
+                    <app-custom-input-2 class="h-12 w-full md:h-full md:flex-grow" [id]="'id_busqueda_value'"
                         [label]="'Búsqueda...'" [type]="'text'" [autocomplete]="''" [class]="''"
                         [control]="formBusqueda.controls.value" [icon]="''">
                     </app-custom-input-2>
 
-                    <app-custom-button-2 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
+                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="'Buscar'"
                         [type]="'accept'" [icon]="'fa-solid fa-magnifying-glass fa-lg'" [class]="''"
                         [valid]="formBusqueda.valid" (click)="onClickBusqueda()">
+                    </app-custom-button-1>
+
+                    <app-custom-button-2 class="w-full md:w-max h-12" [id]="'id_button_agregar'" [label]="'Agregar'"
+                        [type]="'accept'" [icon]="'fa-solid fa-plus fa-lg'" [class]="''" [valid]="true"
+                        (click)="onClickAgregar()">
                     </app-custom-button-2>
 
                     <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_limpiar'" [label]="'Limpiar'"
                         [type]="'cancel'" [icon]="'fa-solid fa-broom fa-lg'" [class]="''" [valid]="true"
                         (click)="onClickLimpiar()">
-                    </app-custom-button-1>
-
-                    <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_agregar'" [label]="'Agregar'"
-                        [type]="'accept'" [icon]="'fa-solid fa-broom fa-lg'" [class]="''" [valid]="true"
-                        (click)="onClickAgregar()">
                     </app-custom-button-1>
 
                 </form>
@@ -62,13 +62,16 @@
 
                         <th scope="col" class="px-6 py-3">Celular</th>
 
+                        <th scope="col" class="px-6 py-3">Ciudad</th>
+
                         <th scope="col" class="px-6 py-3"></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <ng-container *ngFor="let item of dataClientes; index as i">
-                        <tr [ngClass]="{'bg-primary-50' : i % 2 !== 0 }" class="text-primary-800 bg-white border-b">
+                        <tr [ngClass]="{'bg-red-50 text-red-800': item.estado === 0, 'bg-primary-50' : i % 2 !== 0 }"
+                            class="text-primary-800 bg-white border-b">
                             <th scope="col" class="px-6 py-3">{{ i + 1 }}</th>
 
                             <th scope="col" class="px-6 py-3">{{ item.cliente }}</th>
@@ -79,15 +82,13 @@
 
                             <th scope="col" class="px-6 py-3">{{ item.celular }}</th>
 
-                            <td class="px-2 py-2 flex gap-4">
-                                <p class="underline underline-offset-1 cursor-pointer text-info-700"
-                                    (click)="onClickItemTable('ver', i)">Ver
-                                </p>
+                            <th scope="col" class="px-6 py-3">{{ item.ciudad }}</th>
 
-                                <p class="underline underline-offset-1 cursor-pointer text-info-700"
-                                    (click)="onClickItemTable('editar', i)">Actualizar
-                                </p>
-                            </td>
+                            <th scope="col" class="px-6 py-3">
+                                <app-custom-dot-menu [data]="item.estado === 1 ? dataSimpleMenu_0 : dataSimpleMenu_1"
+                                    [class]="''"
+                                    (response)="onReciveResponseSimpleMenu($event, i)"></app-custom-dot-menu>
+                            </th>
                         </tr>
                     </ng-container>
                 </tbody>

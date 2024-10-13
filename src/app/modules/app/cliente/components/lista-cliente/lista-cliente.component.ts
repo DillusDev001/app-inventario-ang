@@ -7,10 +7,11 @@ import { ResponseEmitter } from 'src/app/common/interfaces/emitter/response.emit
 import { DataLocalStorage } from 'src/app/common/interfaces/local/data-local-storage';
 import { goLogin } from 'src/app/common/router/auth.route';
 import { NetworkStatusService } from 'src/app/common/services/network-status.service';
-import { Cliente } from 'src/app/common/utils/app/cliente/cliente.interface';
-import { ClienteService } from 'src/app/common/utils/app/cliente/cliente.service';
+import { Cliente } from 'src/app/common/utils/app/cliente-module/cliente/cliente.interface';
+import { ClienteService } from 'src/app/common/utils/app/cliente-module/cliente/cliente.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { arrayBusquedaCliente } from 'src/app/common/utils/local/arrays/busqueda.array';
+import { arraySimpleCuentaMenu_0, arraySimpleCuentaMenu_1 } from 'src/app/common/utils/local/menu/menu-simple-cuenta.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
 
 @Component({
@@ -67,9 +68,6 @@ export class ListaClienteComponent implements OnInit {
   // loading spinner
   isLoading: boolean = true;
 
-  // Confirmacion
-  showConfirmation: boolean = false;
-
   // Mensaje Alert
   msgAlert: string = '';
 
@@ -91,14 +89,22 @@ export class ListaClienteComponent implements OnInit {
   clienteSelected: Cliente = {
     id_cliente: 0,
     cliente: '',
+    ci: '',
     razon: '',
     nit: '',
-    celular: ''
+    celular: '',
+    ciudad: '',
+    estado: 0
   }
 
   clienteType: string = '';
 
+  // Menu
+  dataSimpleMenu_0 = arraySimpleCuentaMenu_0; // Eliminar
+  dataSimpleMenu_1 = arraySimpleCuentaMenu_1; // Habilitar
 
+  // Cuenta
+  showCuenta: boolean = false;
 
   /** ---------------------------------------- Methods ---------------------------------------- **/
   limpiarBusqueda() {
@@ -133,12 +139,12 @@ export class ListaClienteComponent implements OnInit {
     this.clienteType = 'agregar';
   }
 
-  onClickItemTable(type: string, index: number) {
+  /*onClickItemTable(type: string, index: number) {
     this.clienteSelected = this.dataClientes[index];
     this.clienteType = type;
 
     this.showCliente = true;
-  }
+  }*/
 
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
   clienteLista() {
@@ -167,17 +173,39 @@ export class ListaClienteComponent implements OnInit {
     });
   }
 
+  estadoCliente(id_cliente: number, estado: number) {
+    const data = {
+      estado: estado
+    }
+
+    this.clienteService.clienteActualizar(id_cliente, data).subscribe(result => {
+      result as ApiResult;
+
+      if (result.boolean) {
+        this.msgAlert = estado === 1 ? 'Se ha habilitado correctamente.' : 'Se ha eliminado correctamente.';
+        this.customSuccessToast(this.msgAlert);
+
+        if (this.formBusqueda.controls.value.value !== '') {
+          this.onClickBusqueda();
+        } else {
+          this.clienteLista();
+        }
+
+      } else {
+        this.customErrorToast(result.message);
+        this.isLoading = false;
+      }
+    });
+  }
+
   /** ---------------------------------- Onclick file import ---------------------------------- **/
 
   /** ---------------------------------------- Receiver --------------------------------------- **/
-  onReciveResponseConfirmation(event: ResponseEmitter) {
+  onReciveResponseClienteCuenta(event: ResponseEmitter) {
     if (event.bool) {
-      this.showConfirmation = false;
-      this.isLoading = true;
-      //this.stockSucursalAgregarMultiple();
+      
     } else {
-      this.customErrorToast('Cancelado!!!');
-      this.showConfirmation = false;
+      this.showCuenta = false;
     }
   }
 
@@ -191,11 +219,41 @@ export class ListaClienteComponent implements OnInit {
     }
   }
 
+  onReciveResponseSimpleMenu(event: ResponseEmitter, index: number) {
+    const action = event.data;
+
+    console.log(action)
+
+    switch (action) {
+      case 'ver':
+      case 'editar':
+        this.clienteSelected = this.dataClientes[index];
+        this.clienteType = action;
+
+        this.showCliente = true;
+        break;
+
+      case 'eliminar':
+        this.isLoading = true;
+        this.estadoCliente(this.dataClientes[index].id_cliente, 0);
+        break;
+
+      case 'habilitar':
+        this.isLoading = true;
+        this.estadoCliente(this.dataClientes[index].id_cliente, 1);
+        break;
+
+      case 'cuenta':
+        this.clienteSelected = this.dataClientes[index];
+        this.showCuenta = true;
+        break;
+    }
+  }
+
   /** --------------------------------------- ShowAlerts -------------------------------------- **/
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
-      position: 'bottom-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -211,7 +269,6 @@ export class ListaClienteComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
-      position: 'bottom-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -227,7 +284,6 @@ export class ListaClienteComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
-      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',

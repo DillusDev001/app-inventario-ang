@@ -7,10 +7,12 @@ import { ResponseEmitter } from 'src/app/common/interfaces/emitter/response.emit
 import { DataLocalStorage } from 'src/app/common/interfaces/local/data-local-storage';
 import { goLogin } from 'src/app/common/router/auth.route';
 import { NetworkStatusService } from 'src/app/common/services/network-status.service';
+import { ProductoService } from 'src/app/common/utils/app/producto/producto.service';
 import { StockGeneral } from 'src/app/common/utils/app/stock-module/stock-general/stock-general.interface';
 import { StockGeneralService } from 'src/app/common/utils/app/stock-module/stock-general/stock-general.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { arrayBusquedaStockGeneral } from 'src/app/common/utils/local/arrays/busqueda.array';
+import { arraySimpleMenu_1, arraySimpleMenu_0 } from 'src/app/common/utils/local/menu/menu-simple.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
 
 @Component({
@@ -24,7 +26,8 @@ export class StockGeneralComponent implements OnInit {
     private router: Router,
     private toast: HotToastService,
     private networkStatusService: NetworkStatusService,
-    private stockGeneralService: StockGeneralService
+    private stockGeneralService: StockGeneralService,
+    private productoService: ProductoService
   ) {
     if (getLocalDataLogged() != null) {
       this.dataLocalStorage = getLocalDataLogged();
@@ -116,6 +119,10 @@ export class StockGeneralComponent implements OnInit {
   // PRODUCTO
   showProducto: boolean = false;
 
+  // Menu
+  dataSimpleMenu_0 = arraySimpleMenu_0; // Eliminar
+  dataSimpleMenu_1 = arraySimpleMenu_1; // Habilitar
+
   /** ---------------------------------------- Methods ---------------------------------------- **/
   limpiarBusqueda() {
     this.formBusqueda.controls.busqueda.setValue('cod_producto');
@@ -129,8 +136,9 @@ export class StockGeneralComponent implements OnInit {
     if (this.formBusqueda.valid) {
       if (this.isOnline) {
         this.isLoading = true;
-        const cod_producto = String(this.formBusqueda.value.value);
-        this.getOne(cod_producto);
+        const attribute = String(this.formBusqueda.controls.busqueda.value);
+        const value = String(this.formBusqueda.controls.value.value);
+        this.getBusquedaAttribute(attribute, value);
       } else {
         this.customErrorToast('No hay conexión a internet!!!')
       }
@@ -147,30 +155,6 @@ export class StockGeneralComponent implements OnInit {
     this.showConfirmation = true;
   }
 
-  onClickItemTable(type: string, index: number) {
-    this.prodStockGeneralIndex = index;
-
-    this.prodStockGeneralSelected = this.dataProductos[index];
-
-    this.productoCodeSelected = this.prodStockGeneralSelected.cod_producto
-
-    this.prodStockGeneralType = type;
-
-    this.showProdStockGeneral = true;
-  }
-
-  /*onClickEliminar(index: number) {
-    this.isLoading = true;
-
-    this.eliminarProducto(this.dataProductos[index].cod_producto, 0);
-  }
-
-  onClickHabilitar(index: number) {
-    this.isLoading = true;
-
-    this.eliminarProducto(this.dataProductos[index].cod_producto, 1);
-  }*/
-
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
   getList() {
     this.stockGeneralService.stockGeneralGetList().subscribe(result => {
@@ -185,10 +169,10 @@ export class StockGeneralComponent implements OnInit {
     });
   }
 
-  getOne(cod_producto: string) {
+  getBusquedaAttribute(attribute: string, value: string) {
     this.dataProductos = [];
 
-    this.stockGeneralService.stockGeneralGetOne(cod_producto,).subscribe(result => {
+    this.stockGeneralService.stockGeneralFindAtribute(attribute, value).subscribe(result => {
       result as ApiResult;
 
       if (result.boolean) {
@@ -207,6 +191,31 @@ export class StockGeneralComponent implements OnInit {
       if (result.boolean) {
         this.customSuccessToast(result.message);
         this.getList();
+      } else {
+        this.customErrorToast(result.message);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  estadoProducto(cod_producto: string, estado: number) {
+    const data = {
+      estado: estado
+    }
+
+    this.productoService.productoUpdate(cod_producto, data).subscribe(result => {
+      result as ApiResult;
+
+      if (result.boolean) {
+        this.msgAlert = estado === 1 ? 'Se ha habilitado correctamente.' : 'Se ha eliminado correctamente.';
+        this.customSuccessToast(this.msgAlert);
+
+        if (this.formBusqueda.controls.value.value !== '') {
+          this.onClickBusqueda();
+        } else {
+          this.getList();
+        }
+
       } else {
         this.customErrorToast(result.message);
         this.isLoading = false;
@@ -256,11 +265,35 @@ export class StockGeneralComponent implements OnInit {
     }
   }
 
+  onReciveResponseSimpleMenu(event: ResponseEmitter, index: number) {
+    const action = event.data;
+
+    switch (action) {
+      case 'ver':
+      case 'editar':
+        this.prodStockGeneralIndex = index;
+        this.prodStockGeneralSelected = this.dataProductos[index];
+        this.productoCodeSelected = this.prodStockGeneralSelected.cod_producto
+        this.prodStockGeneralType = action;
+        this.showProdStockGeneral = true;
+        break;
+
+      case 'eliminar':
+        this.isLoading = true;
+        this.estadoProducto(this.dataProductos[index].producto.cod_producto, 0);
+        break;
+
+      case 'habilitar':
+        this.isLoading = true;
+        this.estadoProducto(this.dataProductos[index].producto.cod_producto, 1);
+        break;
+    }
+  }
+
   /** --------------------------------------- ShowAlerts -------------------------------------- **/
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -276,7 +309,6 @@ export class StockGeneralComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -292,7 +324,6 @@ export class StockGeneralComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
-      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',

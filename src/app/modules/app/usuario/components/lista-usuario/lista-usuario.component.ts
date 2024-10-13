@@ -10,6 +10,7 @@ import { NetworkStatusService } from 'src/app/common/services/network-status.ser
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { UsuarioService } from 'src/app/common/utils/app/usuario/usuario.service';
 import { arrayBusquedaUsuario } from 'src/app/common/utils/local/arrays/busqueda.array';
+import { arraySimpleMenu_0, arraySimpleMenu_1 } from 'src/app/common/utils/local/menu/menu-simple.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
 
 @Component({
@@ -87,7 +88,9 @@ export class ListaUsuarioComponent implements OnInit {
 
   dataUsuarios: Usuario[] = [];
 
-
+  // Menu
+  dataSimpleMenu_0 = arraySimpleMenu_0; // Eliminar
+  dataSimpleMenu_1 = arraySimpleMenu_1; // Habilitar
 
   /** ---------------------------------------- Methods ---------------------------------------- **/
 
@@ -105,7 +108,7 @@ export class ListaUsuarioComponent implements OnInit {
     }
   }
 
-  onClicklimpiar() {
+  onClickLimpiar() {
     if (this.isOnline) {
       this.isLoading = true;
       this.formBusqueda.controls.busqueda.setValue('');
@@ -116,7 +119,7 @@ export class ListaUsuarioComponent implements OnInit {
     }
   }
 
-  onClickVer(index: number) {
+  /*onClickVer(index: number) {
     if (this.isOnline) {
       this.typeUsuarioAlert = 'ver';
       this.titleUsuarioAlert = 'Usuario';
@@ -125,9 +128,9 @@ export class ListaUsuarioComponent implements OnInit {
     } else {
       this.customErrorToast('No hay conexión a internet!!!')
     }
-  }
+  }*/
 
-  onClickActulizar(index: number) {
+  /*onClickActulizar(index: number) {
     if (this.isOnline) {
       this.typeUsuarioAlert = 'editar';
       this.titleUsuarioAlert = 'Actualizar Usuario';
@@ -136,7 +139,7 @@ export class ListaUsuarioComponent implements OnInit {
     } else {
       this.customErrorToast('No hay conexión a internet!!!')
     }
-  }
+  }*/
 
   onClickHabilitar(index: number) {
     this.isLoading = true;
@@ -215,11 +218,55 @@ export class ListaUsuarioComponent implements OnInit {
     }
   }
 
+  onReciveResponseSimpleMenu(event: ResponseEmitter, index: number) {
+    const action = event.data;
+    this.typeUsuarioAlert = action;
+
+    switch (action) {
+      case 'ver':
+        this.titleUsuarioAlert = 'Usuario';
+        this.UsuarioAlert = this.dataUsuarios[index].usuario;
+        this.showUsuarioAlert = true;
+        break;
+
+      case 'editar':
+        this.titleUsuarioAlert = 'Editar Usuario';
+        this.UsuarioAlert = this.dataUsuarios[index].usuario;
+        this.showUsuarioAlert = true;
+        break;
+
+      case 'eliminar':
+        if((this.userLogeado.rol === 'Developer' || this.userLogeado.rol === 'Administrador') && this.userLogeado.usuario !== this.dataUsuarios[index].usuario){
+          this.isLoading = true;
+          this.estadoUsuario(this.dataUsuarios[index].usuario, 0);
+        } else {
+          this.customErrorToast('La acción no puede completarse');
+        }
+        break;
+
+      case 'habilitar':
+        if((this.userLogeado.rol === 'Developer' || this.userLogeado.rol === 'Administrador') && this.userLogeado.usuario !== this.dataUsuarios[index].usuario){
+          this.isLoading = true;
+          this.estadoUsuario(this.dataUsuarios[index].usuario, 1);
+        } else {
+          this.customErrorToast('La acción no puede completarse');
+        }
+        break;
+
+        /*<p *ngIf="item.estado === 0 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador') && userLogeado.usuario !== item.usuario"
+          class="underline underline-offset-1 cursor-pointer text-red-700"
+          (click)="onClickHabilitar(i)">Habilitar</p>
+
+        <p *ngIf="item.estado === 1 && (userLogeado.rol === 'Developer' || userLogeado.rol === 'Administrador') && userLogeado.usuario !== item.usuario"
+          class="underline underline-offset-1 cursor-pointer text-info-700"
+          (click)="onClickEliminar(i)">Eliminar</p>*/
+    }
+  }
+
   /** --------------------------------------- ShowAlerts -------------------------------------- **/
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -235,7 +282,6 @@ export class ListaUsuarioComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -251,7 +297,6 @@ export class ListaUsuarioComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
-      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',
