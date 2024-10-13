@@ -111,8 +111,6 @@ export class AddVentaComponent implements OnInit {
 
   @Output() response: EventEmitter<any> = new EventEmitter();
 
-
-  // \
   /** ---------------------------------------- Methods ---------------------------------------- **/
   printTicket() {
     // Define the document structure
@@ -120,139 +118,42 @@ export class AddVentaComponent implements OnInit {
       pageSize: pdfTicketPageSize as PageSize,
       pageMargins: pdfTicketPageMargins,
       content: [
-        { text: 'INNER', style: 'header', alignment: 'center' as Alignment },
+        { text: 'Ticket de Venta', style: 'header', alignment: 'center' as Alignment },
+        { text: '------------------------------' },
         {
-          text: [
-            { text: 'Fecha de emisión: ', bold: true }, '27/09/2024, 16:33:47\n',
-            { text: 'Cliente: ', bold: true }, 'Diego Junior Llusco Chui\n',
-            { text: 'NIT/CI: ', bold: true }, '1231221\n',
-            ''
+          text: 'Fecha: ' + new Date().toLocaleString(),
+        },
+        { text: '------------------------------' },
+        {
+          text: 'Descripción\n Tamaño: 226.77 -> 8 cm en puntos',
+          bold: true,
+        },
+        {
+          ol: [
+            'Producto 1 - $10.00',
+            'Producto 2 - $15.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
+            'Producto 3 - $20.00',
           ],
-          margin: [0, 0, 0, 5,] as Margins
         },
-        { text:'\n'},
+        { text: '------------------------------' },
         {
-          table: {
-            widths: ['15%', '*', '20%', '20%'],
-            margin: [0, 0, 0, 5,] as Margins,
-            body: [
-              [
-                { text: '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', alignment: 'center' as Alignment, colSpan: 4 },
-                { text: '' },
-                { text: '' },
-                { text: '' },
-              ],
-              [
-                { text: 'CANT'},
-                { text: 'DESCRIPCIÓN'},
-                { text: 'P.U.'},
-                { text: 'SUB'},
-              ],
-              [
-                { text: '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', alignment: 'center' as Alignment, colSpan: 4 },
-                { text: '' },
-                { text: '' },
-                { text: '' },
-              ],
-              // Datos
-              [
-                { text: '2', alignment: 'center' as Alignment },
-                { text: '0001-AP5323 - Gorra - L - Amarillo Patito', colSpan: 3},
-                { text: ''},
-                { text: ''},
-              ],
-              [
-                { text: '',  },
-                { text: '',},
-                { text: '100.0'},
-                { text: '200.00'},
-              ],
-
-              [
-                { text: '1', alignment: 'center' as Alignment },
-                { text: '0001-AP5323 - Gorra - L - Amarillo Patito', colSpan: 3},
-                { text: ''},
-                { text: ''},
-              ],
-              [
-                { text: '',  },
-                { text: '',},
-                { text: '100.0'},
-                { text: '100.00'},
-              ],
-              [
-                { text: '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', alignment: 'center' as Alignment, colSpan: 4 },
-                { text: '' },
-                { text: '' },
-                { text: '' },
-              ],
-              // Total
-              [
-                { text: '',  },
-                { text: 'Total :', colSpan: 2},
-                { text: ''},
-                { text: '300.00'},
-              ],
-              // Descuento
-              [
-                { text: '',  },
-                { text: 'Descuento :', colSpan: 2},
-                { text: ''},
-                { text: '10.00'},
-              ],
-              // Total Pagar
-              [
-                { text: '',  },
-                { text: 'Total a pagar :', colSpan: 2},
-                { text: ''},
-                { text: '290.00'},
-              ],
-              [
-                { text: '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', alignment: 'center' as Alignment, colSpan: 4 },
-                { text: '' },
-                { text: '' },
-                { text: '' },
-              ],
-              // Total literal
-              [
-                { text: 'Son: Trecientos bolivianos 00/100', colSpan: 4  },
-                { text: ''},
-                { text: ''},
-                { text: ''},
-              ],
-            ],
-          },
-          layout: {
-            defaultBorder: false, // Sin bordes
-            paddingLeft: function() { return 0; }, // Aplicar padding izquierdo
-            paddingRight: function() { return 0; }, // Aplicar padding derecho
-            paddingTop: function() { return -10; }, // Aplicar padding superior negativo
-            paddingBottom: function() { return 8; }, // Aplicar padding inferior
-          },
+          text: 'Total: $45.00',
+          style: 'total',
         },
-        { text: 'Cant. Prods: 2' },
-        { text: 'Vendedor: Anahí Ortega Apaza' },
-        { text:'\n'},
-        { text: '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', alignment: 'center' as Alignment},
-        { text: 'GRACIAS POR SU COMPRA', alignment: 'center' as Alignment },
       ],
-<<<<<<< HEAD
       styles: pdfStyles,
-=======
-      styles: {
-        header: {
-          fontSize: 44,
-          bold: true,
-        },
-        total: {
-          fontSize: 12,
-          bold: true,
-          alignment: 'right' as Alignment,
-        },
-      },
->>>>>>> 6dafa44dac2d844fa62e884fd74da0fca698291d
       defaultStyle: {
-        fontSize: 10,
+        fontSize: 12,
       },
     };
 
