@@ -13,9 +13,10 @@ import { ClienteCuentaService } from 'src/app/common/utils/app/cliente-module/cl
 import { Cliente } from 'src/app/common/utils/app/cliente-module/cliente/cliente.interface';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { arrayTipoCuentaHistorial, arrayTipoPago } from 'src/app/common/utils/local/arrays/banca.array';
+import { ImageService } from 'src/app/common/utils/local/image.service';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
 import { numberValidator } from 'src/app/common/utils/local/validators.local';
-import { pdfTicketComprobante } from 'src/app/common/utils/pdf/cliente-cuenta/cliente-cuenta-histoitial.ticket';
+import { pdfTicketComprobante } from 'src/app/common/utils/pdf/cliente-cuenta/cliente-cuenta-historial.ticket';
 
 @Component({
   selector: 'app-cuenta-cliente',
@@ -29,7 +30,8 @@ export class CuentaClienteComponent implements OnInit {
     private toast: HotToastService,
     private networkStatusService: NetworkStatusService,
     private clienteCuentaService: ClienteCuentaService,
-    private clienteCuentaHistorialService: ClienteCuentaHistorialService
+    private clienteCuentaHistorialService: ClienteCuentaHistorialService,
+    private imgService: ImageService
   ) {
     if (getLocalDataLogged() != null) {
       this.dataLocalStorage = getLocalDataLogged();
@@ -104,6 +106,9 @@ export class CuentaClienteComponent implements OnInit {
   dataMetodoHistorial = arrayTipoCuentaHistorial;
 
   /** ---------------------------------------- Methods ---------------------------------------- **/
+  limpiarFormMovimento() {
+    this.formMovimiento.reset();
+  }
 
   /** ------------------------------------ Methods onClick ------------------------------------ **/
   onClickCrearCuenta() {
@@ -129,7 +134,7 @@ export class CuentaClienteComponent implements OnInit {
 
       this.agregarClienteCuentaHistorial(data);
     } else {
-      console.log('invalid')
+
     }
   }
 
@@ -143,7 +148,10 @@ export class CuentaClienteComponent implements OnInit {
   }
 
   onClickPrintComprobante(index: number) {
-    pdfTicketComprobante(this.cliente, this.dataHistorial[index], this.userLogeado, 'imprimir');
+    const imageUrl = 'assets/logo-black.png';
+    this.imgService.getImageBase64(imageUrl).subscribe(base64 => {
+      pdfTicketComprobante(this.cliente, this.clienteCuenta, this.dataHistorial[index], this.userLogeado, 'imprimir', base64);
+    });
   }
 
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
@@ -156,7 +164,6 @@ export class CuentaClienteComponent implements OnInit {
     this.clienteCuentaService.clienteCuentaAgregar(data).subscribe(result => {
       result as ApiResult;
 
-      console.log(result)
       if (result.boolean) {
         this.customSuccessToast(result.message)
         this.hasClienteCuenta = true;
@@ -172,11 +179,12 @@ export class CuentaClienteComponent implements OnInit {
       result as ApiResult;
 
       if (result.boolean) {
-        this.customSuccessToast(result.message);
-
+        this.showAgregarHistorial = false;
         // Modificar Cuenta Monto
         const dataCuenta = {
-          monto: this.formMovimiento.controls.tipo.value === 'abono' ? Number(this.formMovimiento.controls.monto.value) + this.clienteCuenta.monto : this.clienteCuenta.monto - Number(this.formMovimiento.controls.monto.value),
+          monto: this.formMovimiento.controls.tipo.value === 'Abono' ?
+            Number(this.formMovimiento.controls.monto.value) + Number(this.clienteCuenta.monto) :
+            Number(this.clienteCuenta.monto) - Number(this.formMovimiento.controls.monto.value),
           user_mod: this.userLogeado.usuario
         }
 
@@ -195,6 +203,7 @@ export class CuentaClienteComponent implements OnInit {
 
       if (result.boolean) {
         this.customSuccessToast(result.message);
+        this.limpiarFormMovimento();
         this.getClienteCuenta();
       } else {
         this.customErrorToast(result.message);

@@ -61,3 +61,19 @@ export function getCodigoServicioNum(str: string): string {
 
     return addCerosIzquierda(Number(arrayString[arrayString.length - 1]) + 1);
 }
+
+// Devuelve monto con coma decimal sin Bs. Ej. 5000 -> 5,000.00
+export function formatoMonto(monto: number) {
+    const formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2,
+    })
+    return formatter.format(monto)
+}
+
+// Devuelve monto con coma decimal Con Bs. Ej. 5000 -> Bs. 5,000.00
+export function formatoBsMonto(monto: number): string {
+    const formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2,
+    })
+    return 'Bs. ' + formatter.format(monto)
+}

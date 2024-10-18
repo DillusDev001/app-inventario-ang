@@ -20,6 +20,8 @@ import { pdfTicketPageMargins, pdfTicketPageSize, pdfStyles } from 'src/app/comm
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
+import { v4 as uuidv4 } from 'uuid';
+
 @Component({
   selector: 'app-add-venta',
   templateUrl: './add-venta.component.html',
@@ -67,6 +69,9 @@ export class AddVentaComponent implements OnInit {
         this.title = 'Venta';
         break;
     }
+
+    const uniqueId = uuidv4();
+    console.log(uniqueId);
   }
 
   /** ---------------------------------- Variables de Inicio ---------------------------------- **/
