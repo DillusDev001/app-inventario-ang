@@ -12,6 +12,7 @@ import { AlmacenService } from 'src/app/common/utils/app/almacen/almacen.service
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { UsuarioService } from 'src/app/common/utils/app/usuario/usuario.service';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { letraCapital, letraCapitalInicial } from 'src/app/common/utils/local/utils.utils';
 
 @Component({
   selector: 'app-custom-add-almacen',
@@ -122,10 +123,10 @@ export class CustomAddAlmacenComponent implements OnInit {
           case 'agregar':
             data = {
               id_sucursal: this.id_sucursal,
-              nombre: this.formAlmacen.value.nombre,
-              direccion: this.formAlmacen.value.direccion,
+              nombre: letraCapital(String(this.formAlmacen.value.nombre).trim()),
+              direccion: letraCapital(String(this.formAlmacen.value.direccion).trim()),
               telefono: this.formAlmacen.value.telefono,
-              descripcion: this.formAlmacen.value.descripcion,
+              descripcion: letraCapitalInicial(String(this.formAlmacen.value.descripcion).trim()),
               usuario_encargado: this.formAlmacen.value.usuario_encargado
             }
 
@@ -134,10 +135,10 @@ export class CustomAddAlmacenComponent implements OnInit {
 
           case 'editar':
             data = {
-              nombre: this.formAlmacen.value.nombre,
-              direccion: this.formAlmacen.value.direccion,
+              nombre: letraCapital(String(this.formAlmacen.value.nombre).trim()),
+              direccion: letraCapital(String(this.formAlmacen.value.direccion).trim()),
               telefono: this.formAlmacen.value.telefono,
-              descripcion: this.formAlmacen.value.descripcion,
+              descripcion: letraCapitalInicial(String(this.formAlmacen.value.descripcion).trim()),
               usuario_encargado: this.formAlmacen.value.usuario_encargado
             }
             this.editarAlmacen(data);
@@ -250,7 +251,6 @@ export class CustomAddAlmacenComponent implements OnInit {
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -266,7 +266,6 @@ export class CustomAddAlmacenComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -282,7 +281,6 @@ export class CustomAddAlmacenComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
-      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',

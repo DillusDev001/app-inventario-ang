@@ -12,12 +12,12 @@
 
                 <form class="flex flex-col gap-4 lg:grid lg:grid-cols-2">
                     <app-custom-input-2 class="col-span-2" [id]="'id_input_sucursal'" [label]="'Nombre Sucursal'"
-                        [type]="'text'" [autocomplete]="''" [class]="''" [control]="formSucursal.controls.nombre"
-                        [icon]="'fa-solid fa-shop fa-lg'">
+                        [type]="'text'" [autocomplete]="''" [class]="''" [classInp]="'capitalize'"
+                        [control]="formSucursal.controls.nombre" [icon]="'fa-solid fa-shop fa-lg'">
                     </app-custom-input-2>
 
                     <app-custom-input-2 [id]="'id_input_direccion'" [label]="'Dirección'" [type]="'text'"
-                        [autocomplete]="''" [class]="''" [control]="formSucursal.controls.direccion"
+                        [autocomplete]="''" [class]="''" [classInp]="'capitalize'" [control]="formSucursal.controls.direccion"
                         [icon]="'fa-solid fa-location-dot fa-lg'"></app-custom-input-2>
 
                     <app-custom-input-2 [id]="'id_input_telefono'" [label]="'Teléfono'" [type]="'text'"

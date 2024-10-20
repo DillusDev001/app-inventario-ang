@@ -13,6 +13,7 @@ import { SucursalService } from 'src/app/common/utils/app/sucursal/sucursal.serv
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { UsuarioService } from 'src/app/common/utils/app/usuario/usuario.service';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { letraCapital, letraCapitalInicial } from 'src/app/common/utils/local/utils.utils';
 
 @Component({
   selector: 'app-custom-add-sucursal',
@@ -122,10 +123,10 @@ export class CustomAddSucursalComponent implements OnInit {
         switch (this.type) {
           case 'agregar':
             data = {
-              nombre: this.formSucursal.value.nombre,
-              direccion: this.formSucursal.value.direccion,
-              telefono: this.formSucursal.value.telefono,
-              descripcion: this.formSucursal.value.descripcion,
+              nombre: letraCapital(String(this.formSucursal.value.nombre).trim()),
+              direccion: letraCapital(String(this.formSucursal.value.direccion).trim()),
+              telefono: String(this.formSucursal.value.telefono).trim(),
+              descripcion: letraCapitalInicial(String(this.formSucursal.value.descripcion).trim()),
               usuario_encargado: this.formSucursal.value.usuario_encargado
             }
 
@@ -134,10 +135,10 @@ export class CustomAddSucursalComponent implements OnInit {
 
           case 'editar':
             data = {
-              nombre: this.formSucursal.value.nombre,
-              direccion: this.formSucursal.value.direccion,
-              telefono: this.formSucursal.value.telefono,
-              descripcion: this.formSucursal.value.descripcion,
+              nombre: letraCapital(String(this.formSucursal.value.nombre).trim()),
+              direccion: String(this.formSucursal.value.direccion).trim(),
+              telefono: String(this.formSucursal.value.telefono).trim(),
+              descripcion: String(this.formSucursal.value.descripcion).trim(),
               usuario_encargado: this.formSucursal.value.usuario_encargado
             }
             this.editarSucursal(data);
@@ -250,7 +251,6 @@ export class CustomAddSucursalComponent implements OnInit {
   customSuccessToast(msg: string) {
     this.toast.success(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #2e798c',
         padding: '16px',
@@ -266,7 +266,6 @@ export class CustomAddSucursalComponent implements OnInit {
   customErrorToast(msg: string) {
     this.toast.error(msg, {
       duration: 2000,
-      position: 'top-right',
       style: {
         border: '1px solid #ef445f',
         padding: '16px',
@@ -282,7 +281,6 @@ export class CustomAddSucursalComponent implements OnInit {
   customLoadingToast(msg: string) {
     this.toast.loading(msg, {
       duration: 10000,
-      position: 'top-right',
       style: {
         border: '1px solid #2b59c3',
         padding: '16px',

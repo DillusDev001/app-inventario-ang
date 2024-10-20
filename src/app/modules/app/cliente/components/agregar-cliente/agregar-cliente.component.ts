@@ -11,6 +11,7 @@ import { ClienteService } from 'src/app/common/utils/app/cliente-module/cliente/
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { arrayCiudad } from 'src/app/common/utils/local/arrays/common.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { letraCapital } from 'src/app/common/utils/local/utils.utils';
 
 @Component({
   selector: 'app-agregar-cliente',
@@ -128,11 +129,11 @@ export class AgregarClienteComponent implements OnInit {
         case 'agregar':
           this.isLoading = true;
           data = {
-            cliente: this.formCliente.value.cliente,
-            ci: this.formCliente.value.ci,
-            razon: this.formCliente.value.razon,
-            nit: this.formCliente.value.nit,
-            celular: this.formCliente.value.celular,
+            cliente: letraCapital(String(this.formCliente.value.cliente).trim()),
+            ci: String(this.formCliente.value.ci).trim(),
+            razon: String(this.formCliente.value.razon).trim().toUpperCase(),
+            nit: String(this.formCliente.value.nit).trim(),
+            celular: String(this.formCliente.value.celular).trim(),
             ciudad: this.formCliente.value.ciudad,
           };
 
@@ -142,11 +143,11 @@ export class AgregarClienteComponent implements OnInit {
         case 'editar':
           this.isLoading = true;
           data = {
-            cliente: this.formCliente.value.cliente,
-            ci: this.formCliente.value.ci,
-            razon: this.formCliente.value.razon,
-            nit: this.formCliente.value.nit,
-            celular: this.formCliente.value.celular,
+            cliente: letraCapital(String(this.formCliente.value.cliente).trim()),
+            ci: String(this.formCliente.value.ci).trim(),
+            razon: String(this.formCliente.value.razon).trim().toUpperCase(),
+            nit: String(this.formCliente.value.nit).trim(),
+            celular: String(this.formCliente.value.celular).trim(),
             ciudad: this.formCliente.value.ciudad,
           };
 

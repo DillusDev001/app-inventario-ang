@@ -17,10 +17,11 @@
             <div class="flex gap-4 w-max">
                 <app-custom-input-2 [id]="'id_input_talonario'" [label]="'Talonario'" [type]="'text'"
                     [autocomplete]="''" [class]="'bg-info-50 overflow-hidden'"
-                    [control]="formCompra.controls.talonario_proforma" [icon]="'fa-solid fa-dollar-sign fa-lg'">
+                    [control]="formItem.controls.code_bar" [icon]="'fa-solid fa-dollar-sign fa-lg'"
+                    (response)="onReciveResponseInputCodeBar($event)">
                 </app-custom-input-2>
 
-                <input type="text" (change)="agregarArticulo($event)" placeholder="Escanea el código aquí" />
+                
 
                 <!--
                 <zxing-scanner (scanSuccess)="handleQrCodeResult($event)" (camerasFound)="hasDevices = true"

@@ -12,7 +12,7 @@
 
                 <form class="flex flex-col gap-4 lg:grid lg:grid-cols-2">
                     <app-custom-input-2 class="col-span-2" [id]="'id_input_sucursal'" [label]="'Código'" [type]="'text'"
-                        [autocomplete]="''" [class]="''" [control]="formProducto.controls.codigo"
+                        [autocomplete]="''" [class]="''" [classInp]="'uppercase'" [control]="formProducto.controls.codigo"
                         [icon]="'fa-solid fa-shirt fa-lg'">
                     </app-custom-input-2>
 
@@ -36,7 +36,7 @@
                             (valueChanged)="onDropdownValueChangeSucursal($event)">
                         </app-custom-drop-down>
 
-                        <div class="border w-8 h-full rounded" [ngStyle]="{ 'background-color': hexaColor}">
+                        <div class=" w-8 h-full rounded" [ngStyle]="{ 'background-color': hexaColor}">
                         </div>
                     </div>
 

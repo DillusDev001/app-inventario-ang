@@ -12,6 +12,7 @@ import { UsuarioService } from 'src/app/common/utils/app/usuario/usuario.service
 import { arrayPreguntas, arraySexo } from 'src/app/common/utils/local/arrays/common.array';
 import { getCode } from 'src/app/common/utils/local/code.local';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { letraCapital } from 'src/app/common/utils/local/utils.utils';
 
 @Component({
   selector: 'app-agregar-usuario',
@@ -144,13 +145,13 @@ export class AgregarUsuarioComponent implements OnInit {
         switch (this.type) {
           case 'nuevo':
             data = {
-              usuario: this.formUsuario.value.usuario,
-              nombres: this.formUsuario.value.nombres,
-              apellidos: this.formUsuario.value.apellidos,
+              usuario: String(this.formUsuario.value.usuario).trim(),
+              nombres: letraCapital(String(this.formUsuario.value.nombres).trim()),
+              apellidos: letraCapital(String(this.formUsuario.value.apellidos).trim()),
               password: this.formUsuario.value.password,
               pregunta: this.formUsuario.value.pregunta,
               respuesta: this.formUsuario.value.respuesta,
-              celular: this.formUsuario.value.celular,
+              celular: String(this.formUsuario.value.celular).trim(),
               sexo: this.formUsuario.value.sexo,
               rol: this.rol,
               autorizacion: this.autorizacion
@@ -161,9 +162,9 @@ export class AgregarUsuarioComponent implements OnInit {
 
           case 'editar':
             data = {
-              nombres: this.formUsuario.value.nombres,
-              apellidos: this.formUsuario.value.apellidos,
-              celular: this.formUsuario.value.celular,
+              nombres: letraCapital(String(this.formUsuario.value.nombres).trim()),
+              apellidos: letraCapital(String(this.formUsuario.value.apellidos).trim()),
+              celular: String(this.formUsuario.value.celular).trim(),
               sexo: this.formUsuario.value.sexo,
             } as Usuario
             this.editarUsuario(data);

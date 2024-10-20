@@ -10,7 +10,7 @@
                 <form [formGroup]="formCategoria" class="flex flex-col md:flex-row gap-2 w-full">
                     <app-custom-input-2 class="h-12 w-full md:h-full md:flex-grow" [id]="'id_busqueda_value'"
                         [label]="'Categoría...'" [type]="'text'" [autocomplete]="''" [class]="''"
-                        [control]="formCategoria.controls.categoria" [icon]="''">
+                        [classInp]="'capitalize'" [control]="formCategoria.controls.categoria" [icon]="''">
                     </app-custom-input-2>
 
                     <app-custom-button-1 class="w-full md:w-max h-12" [id]="'id_button_busqueda'" [label]="btnText"

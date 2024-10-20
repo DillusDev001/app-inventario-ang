@@ -105,7 +105,7 @@ export class TallaComponent implements OnInit {
       switch (this.btnText) {
         case 'Agregar':
           data = {
-            talla: String(this.formTalla.value.talla),
+            talla: String(this.formTalla.value.talla).trim().toUpperCase(),
             user_crea: this.userLogeado.usuario
           }
 
@@ -115,7 +115,7 @@ export class TallaComponent implements OnInit {
 
         case 'Actualizar':
           data = {
-            talla: String(this.formTalla.value.talla),
+            talla: String(this.formTalla.value.talla).trim().toUpperCase(),
             user_crea: this.userLogeado.usuario
           }
 

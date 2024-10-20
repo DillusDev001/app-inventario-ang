@@ -97,6 +97,9 @@ export class AddVentaComponent implements OnInit {
   msgAlert: string = '';
 
   // ================  ================ //
+  formItem = new FormGroup({
+    code_bar: new FormControl('', [Validators.required]),
+  });
   formCompra = new FormGroup({
     id_venta: new FormControl('000001', [Validators.required]),
     talonario_proforma: new FormControl('', [Validators.required]),
@@ -189,10 +192,17 @@ export class AddVentaComponent implements OnInit {
     }
   }
 
+  onReciveResponseInputCodeBar(event: string){
+    console.log("Código de barras escaneado: ", event);
+    this.formItem.controls.code_bar.setValue('');
+  }
+
   agregarArticulo(event: any) {
     const codigoBarra = event.target.value;
     // Lógica para buscar el artículo en la base de datos y agregarlo a la lista
     console.log("Código de barras escaneado: ", codigoBarra);
+    this.formItem.controls.code_bar.setValue('');
+
   }
 
   /** --------------------------------------- ShowAlerts -------------------------------------- **/

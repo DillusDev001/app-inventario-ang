@@ -10,6 +10,7 @@ import { Color } from 'src/app/common/utils/app/mantenimiento/color/color.interf
 import { ColorService } from 'src/app/common/utils/app/mantenimiento/color/color.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { letraCapital } from 'src/app/common/utils/local/utils.utils';
 
 @Component({
   selector: 'app-color',
@@ -109,7 +110,7 @@ export class ColorComponent implements OnInit {
       switch (this.btnText) {
         case 'Agregar':
           data = {
-            color: String(this.formColor.value.color),
+            color: letraCapital(String(this.formColor.value.color).trim()),
             hexadecimal: String(this.formColor.value.hexadecimal),
             user_crea: this.userLogeado.usuario
           }
@@ -120,7 +121,7 @@ export class ColorComponent implements OnInit {
 
         case 'Actualizar':
           data = {
-            color: String(this.formColor.value.color),
+            color: letraCapital(String(this.formColor.value.color).trim()),
             hexadecimal: String(this.formColor.value.hexadecimal),
             user_crea: this.userLogeado.usuario
           }

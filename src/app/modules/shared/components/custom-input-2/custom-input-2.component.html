@@ -8,7 +8,7 @@
         <div class="relative w-full">
 
             <input [type]="type" [id]="id" (blur)="onBlur()" (focus)="onFocus()" [formControl]="control"
-                [autocomplete]="autocomplete"
+                (change)="agregarArticulo($event)" [autocomplete]="autocomplete"
                 class="pt-2 px-0 pb-0 text-base w-full bg-color-transparent border-0 appearance-none focus:outline-none focus:ring-0 peer"
                 [class]="classInput" placeholder="" />
 

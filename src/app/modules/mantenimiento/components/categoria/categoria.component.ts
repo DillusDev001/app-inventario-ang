@@ -10,6 +10,7 @@ import { Categoria } from 'src/app/common/utils/app/mantenimiento/categoria/cate
 import { CategoriaService } from 'src/app/common/utils/app/mantenimiento/categoria/categoria.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { letraCapital } from 'src/app/common/utils/local/utils.utils';
 
 @Component({
   selector: 'app-categoria',
@@ -105,7 +106,7 @@ export class CategoriaComponent implements OnInit {
       switch (this.btnText) {
         case 'Agregar':
           data = {
-            categoria: String(this.formCategoria.value.categoria),
+            categoria: letraCapital(String(this.formCategoria.value.categoria).trim()),
             user_crea: this.userLogeado.usuario
           }
 
@@ -115,7 +116,7 @@ export class CategoriaComponent implements OnInit {
 
         case 'Actualizar':
           data = {
-            categoria: String(this.formCategoria.value.categoria),
+            categoria: letraCapital(String(this.formCategoria.value.categoria).trim()),
             user_crea: this.userLogeado.usuario
           }
 

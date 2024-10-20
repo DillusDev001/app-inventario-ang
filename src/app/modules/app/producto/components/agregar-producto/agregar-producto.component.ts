@@ -20,7 +20,7 @@ import { ProductoService } from 'src/app/common/utils/app/producto/producto.serv
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { arrayGeneroPrenda, arrayTipoPrenda } from 'src/app/common/utils/local/arrays/common.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
-import { inicialesCapital } from 'src/app/common/utils/local/utils.utils';
+import { inicialesCapital, letraCapitalInicial } from 'src/app/common/utils/local/utils.utils';
 import { numberValidator } from 'src/app/common/utils/local/validators.local';
 
 @Component({
@@ -217,16 +217,16 @@ export class AgregarProductoComponent implements OnInit {
             data = {
               cod_producto: cod_producto,
               cod_hash: '',
-              codigo: this.formProducto.value.codigo,
+              codigo: String(this.formProducto.value.codigo).toUpperCase().trim().toUpperCase(),
               tipo: this.formProducto.value.tipo,
               categoria: this.formProducto.value.categoria,
               talla: this.formProducto.value.talla,
               color: this.formProducto.value.color,
               material: this.formProducto.value.material,
               sexo: this.formProducto.value.sexo,
-              descripcion: this.formProducto.value.descripcion,
-              precio_unitario: Number(this.formProducto.value.precio_unitario),
-              precio_mayor: Number(this.formProducto.value.precio_mayor),
+              descripcion: letraCapitalInicial(String(this.formProducto.value.descripcion).trim()),
+              precio_unitario: Number(String(this.formProducto.value.precio_unitario).trim()),
+              precio_mayor: Number(String(this.formProducto.value.precio_mayor).trim()),
             }
 
             this.agregarProducto(data);
@@ -235,9 +235,9 @@ export class AgregarProductoComponent implements OnInit {
           case 'editar':
             data = {
               sexo: this.formProducto.value.sexo,
-              descripcion: this.formProducto.value.descripcion,
-              precio_unitario: Number(this.formProducto.value.precio_unitario),
-              precio_mayor: Number(this.formProducto.value.precio_mayor),
+              descripcion: letraCapitalInicial(String(this.formProducto.value.descripcion).trim()),
+              precio_unitario: Number(String(this.formProducto.value.precio_unitario).trim()),
+              precio_mayor: Number(String(this.formProducto.value.precio_mayor).trim()),
             }
             this.editarProducto(data);
             break;

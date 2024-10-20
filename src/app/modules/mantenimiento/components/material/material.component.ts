@@ -10,6 +10,7 @@ import { Material } from 'src/app/common/utils/app/mantenimiento/material/materi
 import { MaterialService } from 'src/app/common/utils/app/mantenimiento/material/material.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { letraCapital } from 'src/app/common/utils/local/utils.utils';
 
 @Component({
   selector: 'app-material',
@@ -105,7 +106,7 @@ export class MaterialComponent implements OnInit {
       switch (this.btnText) {
         case 'Agregar':
           data = {
-            material: String(this.formMaterial.value.material),
+            material: letraCapital(String(this.formMaterial.value.material).trim()),
             user_crea: this.userLogeado.usuario
           }
 
@@ -115,7 +116,7 @@ export class MaterialComponent implements OnInit {
 
         case 'Actualizar':
           data = {
-            material: String(this.formMaterial.value.material),
+            material: letraCapital(String(this.formMaterial.value.material).trim()),
             user_crea: this.userLogeado.usuario
           }
 
