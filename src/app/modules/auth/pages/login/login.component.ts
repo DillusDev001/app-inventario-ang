@@ -71,8 +71,8 @@ export class LoginComponent implements OnInit {
 
   // ================  ================ //
   formLogin = new FormGroup({
-    usuario: new FormControl('dillus-developer@inmer.com.bo', [Validators.required, Validators.email]),
-    password: new FormControl('Mudanzas*123', [Validators.required])
+    usuario: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
   });
 
   backgroundImageUrl: string = 'assets/bg.png'; // Ruta de tu imagen
