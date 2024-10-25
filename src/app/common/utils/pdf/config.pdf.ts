@@ -27,4 +27,9 @@ export const pdfTicketPageSize = {
     height: 'auto', // Altura variable en función del contenido
 };
 
+export const pdfBarCodeProducto = {
+    width: 141.73, // 5 cm en puntos
+    height: 85.04, // 3 cm en puntos
+};
+
 export const pdfTicketPageMargins = [10, 10] as Margins;

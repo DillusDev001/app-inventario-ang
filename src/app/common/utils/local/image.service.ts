@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as JsBarcode from 'jsbarcode';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,5 +23,16 @@ export class ImageService {
         observer.error(err);
       });
     });
+  }
+
+  generateBarcode(value: string): string {
+    const canvas = document.createElement('canvas');
+    JsBarcode(canvas, value, {
+      format: 'CODE128', // Tipo de código de barras (puedes elegir otros formatos)
+      width: 2,
+      height: 100,
+      displayValue: false,
+    });
+    return canvas.toDataURL('image/png'); // Devuelve el código de barras como base64
   }
 }

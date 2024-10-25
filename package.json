@@ -22,6 +22,7 @@
     "@ngneat/overview": "^5.1.1",
     "@types/pdfmake": "^0.2.9",
     "@zxing/ngx-scanner": "^18.0.1",
+    "jsbarcode": "^3.11.6",
     "pdfmake": "*",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

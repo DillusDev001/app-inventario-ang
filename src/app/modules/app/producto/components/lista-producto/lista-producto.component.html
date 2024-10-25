@@ -64,6 +64,8 @@
                         <th scope="col" class="px-6 py-3">Precio Mayor</th>
 
                         <th scope="col" class="px-6 py-3"></th>
+
+                        <th scope="col" class="px-6 py-3"></th>
                     </tr>
                 </thead>
 
@@ -85,6 +87,10 @@
                             <th scope="col" class="px-6 py-3">{{ item.precio_unitario | currency:'BOB':'Bs. '}}</th>
 
                             <th scope="col" class="px-6 py-3">{{ item.precio_mayor | currency:'BOB':'Bs. '}}</th>
+
+                            <th scope="col" class="px-6 py-3">
+                                <button (click)="onClickCodeBar(i)"><i class="fa-solid fa-barcode fa-lg"></i></button>
+                            </th>
 
                             <th scope="col" class="px-6 py-3">
                                 <app-custom-dot-menu [data]="item.estado === 1 ? dataSimpleMenu_0 : dataSimpleMenu_1"

@@ -167,7 +167,7 @@ export function pdfTicketComprobante(cliente: Cliente, cuenta: ClienteCuenta, it
 
     switch (type) {
         case 'descargar':
-            pdfMake.createPdf(pdfCreation).download('objCotizacionFRX.cod_cotizacion' + '.pdf');
+            pdfMake.createPdf(pdfCreation).download('cliente - ' + cliente.nit + '.pdf');
             break;
 
         case 'imprimir':

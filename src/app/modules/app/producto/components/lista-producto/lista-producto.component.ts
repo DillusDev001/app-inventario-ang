@@ -11,8 +11,10 @@ import { Producto } from 'src/app/common/utils/app/producto/producto.interface';
 import { ProductoService } from 'src/app/common/utils/app/producto/producto.service';
 import { Usuario } from 'src/app/common/utils/app/usuario/usuario.interface';
 import { arrayBusquedaProducto } from 'src/app/common/utils/local/arrays/busqueda.array';
+import { ImageService } from 'src/app/common/utils/local/image.service';
 import { arraySimpleMenu_0, arraySimpleMenu_1 } from 'src/app/common/utils/local/menu/menu-simple.array';
 import { deleteLocalStorageData, getLocalDataLogged } from 'src/app/common/utils/local/storage.local';
+import { pdfProductoCBarCode } from 'src/app/common/utils/pdf/producto/bar-code.pdf';
 
 @Component({
   selector: 'app-lista-producto',
@@ -25,7 +27,8 @@ export class ListaProductoComponent implements OnInit {
     private router: Router,
     private toast: HotToastService,
     private networkStatusService: NetworkStatusService,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private imageService: ImageService
   ) {
     if (getLocalDataLogged() != null) {
       this.dataLocalStorage = getLocalDataLogged();
@@ -125,6 +128,12 @@ export class ListaProductoComponent implements OnInit {
     this.isLoading = true;
     this.limpiarBusqueda();
     this.getListaProductos();
+  }
+
+  onClickCodeBar(index: number){
+    const barcode = this.imageService.generateBarcode(this.dataProductos[index].cod_producto);
+
+    pdfProductoCBarCode(this.dataProductos[index], 'imprimir', barcode);
   }
 
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/
