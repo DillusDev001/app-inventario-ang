@@ -145,7 +145,7 @@ export class AgregarProductoComponent implements OnInit {
   generarCodigoProducto(): String {
     let codigo = '';
 
-    codigo = String(this.formProducto.value.codigo) + '-' +
+    codigo = String(this.formProducto.value.codigo).toUpperCase() + '-' +
       inicialesCapital(String(this.formProducto.value.tipo)) +
       this.getIDCategoria(String(this.formProducto.value.categoria)) +
       this.getIDTalla(String(this.formProducto.value.talla)) +
