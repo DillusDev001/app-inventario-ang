@@ -15,6 +15,11 @@ export class ProductoService {
   urlVersion: string = versionApi;
   urlModule: string = '/producto';
 
+  public productoAgregarMultiple(data: any[]): Observable<ApiResult> {
+    const url = this.urlBase + this.urlVersion + this.urlModule  + '/multiple';
+    return this.http.post<ApiResult>(url, data);
+  }
+
   public productoAgregar(data: any): Observable<ApiResult> {
     const url = this.urlBase + this.urlVersion + this.urlModule;
     return this.http.post<ApiResult>(url, data);

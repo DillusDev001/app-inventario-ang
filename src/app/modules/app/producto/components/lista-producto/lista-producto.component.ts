@@ -91,7 +91,9 @@ export class ListaProductoComponent implements OnInit {
 
   productoAddType: string = '';
 
-  showAddProducto = false;
+  showProducto = false;
+
+  showAddMultipleProducto = false;
 
   // Menu
   dataSimpleMenu_0 = arraySimpleMenu_0; // Eliminar
@@ -121,7 +123,7 @@ export class ListaProductoComponent implements OnInit {
 
   onClickAgregar() {
     this.productoAddType = 'agregar';
-    this.showAddProducto = true;
+    this.showAddMultipleProducto = true;
   }
 
   onClickLimpiar() {
@@ -195,13 +197,23 @@ export class ListaProductoComponent implements OnInit {
   /** ---------------------------------- Onclick file import ---------------------------------- **/
 
   /** ---------------------------------------- Receiver --------------------------------------- **/
-  onReciveResponseAddProducto(event: ResponseEmitter) {
+  onReciveResponseProducto(event: ResponseEmitter) {
     if (event.bool) {
-      this.showAddProducto = false;
+      this.showProducto = false;
       this.isLoading = true;
       this.getListaProductos();
     } else {
-      this.showAddProducto = false;
+      this.showProducto = false;
+    }
+  }
+
+  onReciveResponseAddMultipleProducto(event: ResponseEmitter) {
+    if (event.bool) {
+      this.showAddMultipleProducto = false;
+      this.isLoading = true;
+      this.getListaProductos();
+    } else {
+      this.showAddMultipleProducto = false;
     }
   }
 
@@ -213,7 +225,7 @@ export class ListaProductoComponent implements OnInit {
       case 'editar':
         this.cod_prod_selected = this.dataProductos[index].cod_producto;
         this.productoAddType = action;
-        this.showAddProducto = true;
+        this.showProducto = true;
         break;
 
       case 'eliminar':

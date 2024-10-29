@@ -7,6 +7,7 @@ import { ListaProductoComponent } from './components/lista-producto/lista-produc
 import { AgregarProductoComponent } from './components/agregar-producto/agregar-producto.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AgregarMultipleProductoComponent } from './components/agregar-multiple-producto/agregar-multiple-producto.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     IndexProductoComponent,
     ListaProductoComponent,
     AgregarProductoComponent,
+    AgregarMultipleProductoComponent,
   ],
   imports: [
     CommonModule,

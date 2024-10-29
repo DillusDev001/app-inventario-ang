@@ -2,8 +2,11 @@
 
     <app-custom-my-loading *ngIf="isLoading"></app-custom-my-loading>
 
-    <app-agregar-producto *ngIf="showAddProducto" [cod_producto]="cod_prod_selected" [type]="productoAddType"
-        (response)="onReciveResponseAddProducto($event)"></app-agregar-producto>
+    <app-agregar-producto *ngIf="showProducto" [cod_producto]="cod_prod_selected" [type]="productoAddType"
+        (response)="onReciveResponseProducto($event)"></app-agregar-producto>
+
+    <app-agregar-multiple-producto *ngIf="showAddMultipleProducto" [cod_producto]="cod_prod_selected" [type]="productoAddType"
+        (response)="onReciveResponseAddMultipleProducto($event)"></app-agregar-multiple-producto>
 
     <!-- Botones Busqueda -->
     <div *ngIf="!isLoading" class="flex flex-col gap-2 w-full h-max">
