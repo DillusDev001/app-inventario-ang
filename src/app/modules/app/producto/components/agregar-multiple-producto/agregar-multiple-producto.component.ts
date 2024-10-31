@@ -110,10 +110,10 @@ export class AgregarMultipleProductoComponent implements OnInit {
   // ================  ================ //
   formProducto = new FormGroup({
     codigo: new FormControl('', [Validators.required]),
-    tipo: new FormControl('', [Validators.required]),
+    tipo: new FormControl('Prenda', [Validators.required]),
     categoria: new FormControl('', [Validators.required]),
     material: new FormControl('', [Validators.required]),
-    sexo: new FormControl('', [Validators.required]),
+    sexo: new FormControl('Varón', [Validators.required]),
     descripcion: new FormControl('', []),
     precio_unitario: new FormControl('', [Validators.required, numberValidator()]),
     precio_mayor: new FormControl('', [Validators.required, numberValidator()]),
@@ -298,6 +298,10 @@ export class AgregarMultipleProductoComponent implements OnInit {
         this.customErrorToast('La talla ya existe!!!')
       }
     }
+  }
+
+  onClickRemoveTalla(index: number){
+    this.formDataTalla.splice(index, 1);
   }
 
   /** ----------------------------------- Consultas Sevidor ----------------------------------- **/

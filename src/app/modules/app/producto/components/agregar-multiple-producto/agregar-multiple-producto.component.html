@@ -75,12 +75,18 @@
                                         <th scope="col" class="bg-primary-100 py-2 border-b">
                                             Talla
                                         </th>
+                                        <th scope="col" class="bg-primary-100 py-2 border-b">
+
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let talla of formDataTalla" class="bg-white border-b">
+                                    <tr *ngFor="let talla of formDataTalla; index as i" class="bg-white border-b">
                                         <td scope="row" class="">
                                             {{ talla.data }}
+                                        </td>
+                                        <td scope="row" class="">
+                                            <p class="cursor-pointer text-info-500 underline" (click)="onClickRemoveTalla(i)">Quitar</p>
                                         </td>
                                     </tr>
                                 </tbody>
